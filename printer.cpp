@@ -41,7 +41,7 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("=============================================\n");
         printf("||     Chanllenge 1/3: Minesweeping        ||\n");
         printf("=============================================\n\n");
-        printf("Legend has that there were once many wild boars in the HKU campus\n");
+        printf("Legend has that there were once many wild boars in the HKU campus\n\n");
 
         break;
     case 2:
@@ -51,8 +51,9 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("=============================================\n");
         printf("||     Chanllenge 2/3: Cross Roads         ||\n");
         printf("=============================================\n\n");
-        printf("Congratulations, Chanllenger! We have now cleared the mines, and are movinig into the second chanllenge\n");
-        printf("We need to cross the crowded Pokfulam Road\n");
+        printf("Congratulations, Chanllenger! We have now cleared the mines.\n\n");
+        printf("We are movinig into the second chanllenge.\n\n");
+        printf("We need to cross the crowded Pokfulam Road\n\n");
 
         break;
     case 3:
@@ -62,7 +63,7 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("=============================================\n");
         printf("||     Chanllenge 3/3: Snake               ||\n");
         printf("=============================================\n\n");
-        printf("We may have crossed the road now... But the chanllenge is not yet\n");
+        printf("We may have crossed the road now... But the chanllenge is not yet completed.\n\n");
         printf("Awaits us is the Wild Boar Prince!\n");
 
         break;
@@ -70,7 +71,7 @@ void plot(int stage) // use this function to print out all the dialog / plots
         // this is what happen when you passed all chanllenges in the end
 
         system(CLEAR_COMMAND); // clear the console screen
-        printf("We have successfully passed through all the chanllenges\n");
+        printf("We have successfully passed through all the chanllenges\n\n");
 
         break;
     case -1:
@@ -91,9 +92,10 @@ void plot(int stage) // use this function to print out all the dialog / plots
     std::getchar();
 }
 
-int main()
+int main() // If you directly compile this .cpp file, this function make sure that we have something to run
 {
-    // executable main function code, for testing purposes
+    // Specifically, what this main() does is that it prints all our plots and menus for debugging purposes.
+
     print_menu();
     std::puts("TESTING IN PROGRESS: Press any key to continue...");
     std::getchar();
