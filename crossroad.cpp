@@ -19,7 +19,7 @@ using namespace std;
 // Function prototypes
 
 // Main function
-int solitare()
+int crossroad()
 {
     // Do not change name. This function is used in main.cpp
     return 0;
