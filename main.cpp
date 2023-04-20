@@ -9,7 +9,7 @@
 #include "printer.h"
 #include "minesweeper.h"
 #include "snake.h"
-#include "solitare.h"
+#include "crossroad.h"
 
 #ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
@@ -79,21 +79,21 @@ int new_game() // this function returns the total score. -1 signifies game over
         return -1; // return -1 means game over
     }
     plot(2); // Plot 2 is what happen after you passed the first chanllenge
+    int crossroad_score = crossroad();
+    if (crossroad_score < 0)
+    {
+        plot(-1);
+        return -1;
+    }
+    plot(3); // Plot 3 is what happen after you passed the second chanllenge
     int snake_score = snake();
     if (snake_score < 0)
     {
         plot(-1);
         return -1;
     }
-    plot(3); // Plot 3 is what happen after you passed the second chanllenge
-    int solitare_score = solitare();
-    if (solitare_score < 0)
-    {
-        plot(-1);
-        return -1;
-    }
     plot(4); // Plot 4 is what happen after you passed the third chanllenge
-    return (minesweeper_score + snake_score + solitare_score);
+    return (minesweeper_score + crossroad_score + snake_score);
 }
 
 void add_to_leaderboard(int score, string time) {}
