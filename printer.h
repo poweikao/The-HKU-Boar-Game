@@ -8,6 +8,5 @@
 
 void print_menu();
 void plot(int stage);
-int main();
 
 #endif
