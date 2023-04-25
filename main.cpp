@@ -51,7 +51,7 @@ int main()
             break;
         case 3: 
             // this one works pretty well already ~Paul 4/12/2023
-            printf(\n"Exiting game...\n\n");
+            printf("\nExiting game...\n\n");
             exit(0);
             break;
         default: 

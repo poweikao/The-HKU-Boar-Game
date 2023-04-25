@@ -2,7 +2,7 @@ CC= g++
 CFLAGS= -Wall -Wextra -pedantic -std=c++11 -Wno-unused-parameter
 EXEC= main.exe
 
-SRC= main.cpp printer.cpp minesweeper.cpp snake.cpp solitare.cpp
+SRC= main.cpp printer.cpp minesweeper.cpp snake.cpp crossroad.cpp
 OBJ= $(SRC:.cpp=.o)
 
 all: $(EXEC)
@@ -16,4 +16,7 @@ $(EXEC): $(OBJ)
 clean:
 	rm -f *.o
 
-.PHONY: clean
+deep_clean:
+	rm -f *.o *.exe
+
+.PHONY: clean deep_clean

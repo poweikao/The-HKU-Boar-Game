@@ -92,7 +92,7 @@ void plot(int stage) // use this function to print out all the dialog / plots
     std::getchar();
 }
 
-int main() // If you directly compile this .cpp file, this function make sure that we have something to run
+/* int main() // If you directly compile this .cpp file, this function make sure that we have something to run
 {
     // Specifically, what this main() does is that it prints all our plots and menus for debugging purposes.
 
@@ -103,4 +103,4 @@ int main() // If you directly compile this .cpp file, this function make sure th
     {
         plot(element);
     }
-}
+} */

@@ -251,10 +251,10 @@ void print_board(char game_board[][5])
     return;
 }
 
-int main()
+/* int main()
 {
     if (minesweeper() == 0)
     {
         cout << "DEBUG: GAME OVER";
     }
-}
+} */
