@@ -8,36 +8,47 @@
 
 int snake(); // Do not change name. This function is used in main.cpp
 
-#endif
-
-const int BOARD_WIDTH = 20;
-const int BOARD_HEIGHT = 20;
+const int BOARD_WIDTH = 25;
+const int BOARD_HEIGHT = 15;
 const int INITIAL_SNAKE_LENGTH = 3;
 
-struct Position {
+struct Position
+{
     int x;
     int y;
 };
 
-enum class Direction {
+enum class Direction
+{
     UP,
     DOWN,
     LEFT,
     RIGHT
 };
 
-struct Snake {
+enum class GameOver
+{
+    WIN,
+    COLLISSION,
+    NOT_YET
+};
+
+struct Snake
+{
     Direction direction;
     int length;
     Position body[BOARD_WIDTH * BOARD_HEIGHT];
 };
 
-struct Food {
+struct Food
+{
     Position position;
     bool eaten;
+    int how_many_already_eaten = 0;
 };
 
-class SnakeGame {
+class SnakeGame
+{
 public:
     SnakeGame();
     ~SnakeGame();
@@ -46,16 +57,15 @@ public:
 private:
     void initialize_game();
     void draw_board();
+    void draw_walls_and_everything();
     void draw_snake();
     void draw_food();
     void update_snake();
-    void update_food();
+    void update_food(GameOver &game_status);
     bool is_collision();
     bool is_food_eaten();
     bool is_game_over();
-    void pause_game();
-    void resume_game();
-    void print_game_over();
+    void print_game_over(const GameOver &game_status);
     void print_score();
 
     Snake snake;
