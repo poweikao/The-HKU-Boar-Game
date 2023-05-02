@@ -29,8 +29,7 @@ int snake()
 {
     // Do not change name. This function is used in main.cpp
     SnakeGame new_game;
-    new_game.run();
-    return 1;
+    return new_game.run();
 }
 
 ///////
@@ -248,7 +247,7 @@ void SnakeGame::print_game_over(const GameOver& game_status)
 void SnakeGame::print_score()
 {
     std::cout << "Score: " << score << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 // Direction-getting related utilities
