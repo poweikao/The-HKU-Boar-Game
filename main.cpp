@@ -9,7 +9,7 @@
 #include "printer.h"
 #include "minesweeper.h"
 #include "snake.h"
-#include "crossroad.h"
+#include "pushbox.h"
 
 #ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
@@ -25,36 +25,31 @@ void add_to_leaderboard(int game_score, string time);
 
 int main()
 {
-    int user_choice;
+    char user_choice;
+        int game_score;
     do
-    {
+    {        
         print_menu();
 
         // Read user input
         printf("Enter your choice: ");
         std::cin >> user_choice;
 
+        
+
         // Handle user input
-        int game_score;
         switch (user_choice)
         {
-        case 1:
+        case 'N':
             printf("Starting new game...\n");
-
             game_score = new_game();
-            add_to_leaderboard(game_score, "the time when the score happened");
-
             break;
-        case 2: 
-            // not sure if we need to do this
-            printf("Showing leaderboard...\n");
-            break;
-        case 3: 
+        case 'Q':
             // this one works pretty well already ~Paul 4/12/2023
             printf("\nExiting game...\n\n");
             exit(0);
             break;
-        default: 
+        default:
             // this one works pretty well already ~Paul 4/12/2023
             printf("Invalid choice. Please try again.\n");
             break;
@@ -65,7 +60,7 @@ int main()
         std::cin.ignore();
         std::cin.get();
 
-    } while (user_choice != 3);
+    } while (user_choice != 'Q');
     return 0;
 }
 
@@ -79,21 +74,19 @@ int new_game() // this function returns the total score. -1 signifies game over
         return -1; // return -1 means game over
     }
     plot(2); // Plot 2 is what happen after you passed the first chanllenge
-    int crossroad_score = crossroad();
-    if (crossroad_score < 0)
-    {
-        plot(-1);
-        return -1;
-    }
-    plot(3); // Plot 3 is what happen after you passed the second chanllenge
     int snake_score = snake();
     if (snake_score < 0)
     {
         plot(-1);
         return -1;
     }
+    plot(3); // Plot 3 is what happen after you passed the second chanllenge
+    int pushbox_score = pushbox();
+    if (pushbox_score < 0)
+    {
+        plot(-1);
+        return -1;
+    }
     plot(4); // Plot 4 is what happen after you passed the third chanllenge
-    return (minesweeper_score + crossroad_score + snake_score);
+    return (minesweeper_score + snake_score + pushbox_score);
 }
-
-void add_to_leaderboard(int score, string time) {}

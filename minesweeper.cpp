@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
+#include "minesweeper.h"
 
 #ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
@@ -32,6 +33,7 @@ int main();
 int minesweeper()
 {
     bool winning_condition = false;
+    bool first_move_detector = true;
 
     char game_board[5][5], answer_board[5][5];
 
@@ -58,12 +60,28 @@ int minesweeper()
         }
 
         make_move(&r, &c);
+
+        // Secret debugging auto win game code
+        if (r == 999)
+        {
+            return 1;
+        }
+        // Paul ~ 5/1/2023
+
         if (is_mine(r, c, answer_board))
         {
-            return 0;
+            if (first_move_detector)
+            {
+                return minesweeper();
+            }
+            else
+            {
+                return -1;
+            }
         }
         else
         {
+            first_move_detector = false;
             how_many_moves--;
             winning_condition = reveal_board(r, c, answer_board, game_board);
         }
@@ -77,6 +95,8 @@ int minesweeper()
     }
 }
 
+//////////////
+
 bool is_mine(int row, int col, const char answer_board[][5])
 {
     if (answer_board[row][col] == '*')
@@ -87,16 +107,26 @@ bool is_mine(int row, int col, const char answer_board[][5])
 
 void make_move(int *r, int *c)
 {
-    cout << endl
-         << "Please enter two integers (Row, Column): ";
-    cin >> *r >> *c;
-    return;
+    while (true)
+    {
+        cout << endl
+             << "Please enter two integers (Row, Column): ";
+        cin >> *r >> *c;
+        if (*r == 999)
+        { // 999 is the secret win game code
+            break;
+        }
+        else if (*r >= 1 && *r <= 5 && *c >= 1 && *c <= 5)
+        {
+            break;
+        }
+        cout << "Invalid input: Row and Column must be between 1 and 5." << endl;
+    }
 }
-
 void implement_mines(char answer_board[][5])
 {
     srand((unsigned)time(NULL));
-    for (int i = 0; i < 5;) // 5 is the number of mines
+    for (int i = 0; i < 4;) // 4 is the number of mines
     {
         int x = (rand() % 25) / 5;
         int y = (rand() % 25) % 5;
@@ -251,10 +281,10 @@ void print_board(char game_board[][5])
     return;
 }
 
-/* int main()
+/*int main()
 {
     if (minesweeper() == 0)
     {
         cout << "DEBUG: GAME OVER";
     }
-} */
+}*/

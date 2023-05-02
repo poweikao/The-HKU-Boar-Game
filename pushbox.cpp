@@ -13,6 +13,8 @@
 
 using namespace std;
 
+// Main function
+
 int pushbox()
 {
     Game game;
@@ -20,12 +22,15 @@ int pushbox()
     return 0;
 }
 
-Game::Game() {
+//////////////
+
+Game::Game()
+{
     map = {
         "########",
-        "#P.....#",
-        "#..B...#",
-        "#.X....#",
+        "#......#",
+        "#......#",
+        "#......#",
         "########",
     };
 
@@ -37,27 +42,39 @@ Game::Game() {
     goalY = 3;
 }
 
-void Game::play() {
-    while (!checkWin()) {
-        printMap();
+void Game::play()
+{
+    printMap();
+    while (!checkWin())
+    {
         char input;
+        cout << "\nPlease enter player movement commands (in WASD): ";
         std::cin >> input;
 
         int dx = 0;
         int dy = 0;
 
-        if (input == 'w') {
+        if (input == 'w')
+        {
             dy = -1;
-        } else if (input == 's') {
+        }
+        else if (input == 's')
+        {
             dy = 1;
-        } else if (input == 'a') {
+        }
+        else if (input == 'a')
+        {
             dx = -1;
-        } else if (input == 'd') {
+        }
+        else if (input == 'd')
+        {
             dx = 1;
         }
 
-        if (movePlayer(dx, dy)) {
-            if (playerX + dx == boxX && playerY + dy == boxY) {
+        if (movePlayer(dx, dy))
+        {
+            if (playerX + dx == boxX && playerY + dy == boxY)
+            {
                 boxX += dx;
                 boxY += dy;
             }
@@ -65,21 +82,34 @@ void Game::play() {
             playerX += dx;
             playerY += dy;
         }
+        printMap();
     }
 
-    std::cout << "Congratulation HKUer, you win!" << std::endl;
+    std::cout << "\nCongratulation HKUer, you win!" << std::endl;
 }
 
-void Game::printMap() {
-    for (int y = 0; y < map.size(); y++) {
-        for (int x = 0; x < map[y].length(); x++) {
-            if (x == playerX && y == playerY) {
+void Game::printMap()
+{
+    cout << endl;
+    for (int y = 0; y < map.size(); y++)
+    {
+        cout << "   ";
+        for (int x = 0; x < map[y].length(); x++)
+        {
+            if (x == playerX && y == playerY)
+            {
                 std::cout << 'P';
-            } else if (x == boxX && y == boxY) {
+            }
+            else if (x == boxX && y == boxY)
+            {
                 std::cout << 'B';
-            } else if (x == goalX && y == goalY) {
+            }
+            else if (x == goalX && y == goalY)
+            {
                 std::cout << 'X';
-            } else {
+            }
+            else
+            {
                 std::cout << map[y][x];
             }
         }
@@ -87,19 +117,23 @@ void Game::printMap() {
     }
 }
 
-bool Game::movePlayer(int dx, int dy) {
+bool Game::movePlayer(int dx, int dy)
+{
     int newX = playerX + dx;
     int newY = playerY + dy;
 
-    if (map[newY][newX] == '#') {
+    if (map[newY][newX] == '#')
+    {
         return false;
     }
 
-    if (newX == boxX && newY == boxY) {
+    if (newX == boxX && newY == boxY)
+    {
         int newBoxX = boxX + dx;
         int newBoxY = boxY + dy;
 
-        if (map[newBoxY][newBoxX] == '#') {
+        if (map[newBoxY][newBoxX] == '#')
+        {
             return false;
         }
     }
@@ -107,7 +141,7 @@ bool Game::movePlayer(int dx, int dy) {
     return true;
 }
 
-bool Game::checkWin() {
+bool Game::checkWin()
+{
     return boxX == goalX && boxY == goalY;
 }
-
