@@ -8,35 +8,20 @@
 
 int pushbox(); // Do not change name. This function is used in main.cpp
 
-const int BOARD_WIDTH = 10;
-const int BOARD_HEIGHT = 10;
-
-enum class CellType
-{
-    WALL,
-    PLAYER,
-    BOX,
-    DESTINATION,
-    FLOOR
-};
-
-class BoxGame
-{
+class Game {
 public:
-    BoxGame();
-    void run();
+    Game();
+    void play();
 
 private:
-    void initialize_game();
-    void draw_board();
-    void move_player(int dx, int dy);
-    bool is_valid_move(int x, int y);
-    bool is_game_over();
-    void print_game_over();
+    std::vector<std::string> map;
+    int playerX, playerY;
+    int boxX, boxY;
+    int goalX, goalY;
 
-    CellType board[BOARD_HEIGHT][BOARD_WIDTH];
-    int player_x, player_y;
-    int num_boxes_on_target;
+    void printMap();
+    bool movePlayer(int dx, int dy);
+    bool checkWin();
 };
 
 #endif
