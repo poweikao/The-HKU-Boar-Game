@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
+#include "pushbox.h"
 
 #ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
@@ -12,21 +13,12 @@
 
 using namespace std;
 
-// Define constants
-
-// Define enum and struct
-
-// Function prototypes
-
-// Main function
-int crossroad()
+int pushbox()
 {
-    // Do not change name. This function is used in main.cpp
+    Game game;
+    game.play();
     return 0;
 }
-
-// pushbox.cpp
-#include "pushbox.h"
 
 Game::Game() {
     map = {
@@ -117,3 +109,5 @@ bool Game::movePlayer(int dx, int dy) {
 
 bool Game::checkWin() {
     return boxX == goalX && boxY == goalY;
+}
+
