@@ -5,8 +5,10 @@
 #include <iomanip>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
+#include <string>
 
-int pushbox(); // Do not change name. This function is used in main.cpp
+int pushbox(); // Function name changed to match implementation
 
 class Game {
 public:
@@ -25,3 +27,4 @@ private:
 };
 
 #endif
+
