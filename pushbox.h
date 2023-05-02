@@ -23,7 +23,9 @@ private:
 
     void printMap();
     bool movePlayer(int dx, int dy);
+    bool moveBox(int dx, int dy);
     bool checkWin();
+    bool checkLose();
 };
 
 #endif

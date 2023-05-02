@@ -29,14 +29,7 @@ int snake()
 {
     // Do not change name. This function is used in main.cpp
     SnakeGame new_game;
-    new_game.run();
-    return 0;
-}
-
-int main()
-{
-    snake();
-    return 0;
+    return new_game.run();
 }
 
 ///////
@@ -51,7 +44,7 @@ SnakeGame::~SnakeGame()
     // Do nothing
 }
 
-void SnakeGame::run()
+int SnakeGame::run()
 {
 
     GameOver game_status = GameOver::NOT_YET;
@@ -79,12 +72,18 @@ void SnakeGame::run()
             snake.length++;
         }
 
-        update_snake();
+        update_snake_head_direction();
         update_food(game_status);
         draw_board();
     }
     print_game_over(game_status);
     print_score();
+
+    if(game_status == GameOver::WIN){
+        return 1;
+    }else{
+        return -1;
+    }
 }
 
 void SnakeGame::initialize_game()
@@ -122,7 +121,7 @@ void SnakeGame::draw_board()
 
     // Draw the board with walls and food
     draw_food();
-    draw_snake();
+    draw_snake_body();
     draw_walls_and_everything();
 }
 
@@ -145,7 +144,7 @@ void SnakeGame::draw_walls_and_everything()
     cout << endl;
 }
 
-void SnakeGame::draw_snake()
+void SnakeGame::draw_snake_body()
 {
 
     for (int i = 0; i < snake.length; i++) {
@@ -161,7 +160,7 @@ void SnakeGame::draw_food()
     board[food.position.y][food.position.x] = 'X';
 }
 
-void SnakeGame::update_snake()
+void SnakeGame::update_snake_head_direction()
 {
     board[snake.body[snake.length - 1].y][snake.body[snake.length - 1].x] = ' ';
     // ^^ added this line to make the snake's tail auto disappearing ~Paul 27 Apr
@@ -248,6 +247,7 @@ void SnakeGame::print_game_over(const GameOver& game_status)
 void SnakeGame::print_score()
 {
     std::cout << "Score: " << score << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 // Direction-getting related utilities

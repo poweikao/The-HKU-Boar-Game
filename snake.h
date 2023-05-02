@@ -52,15 +52,15 @@ class SnakeGame
 public:
     SnakeGame();
     ~SnakeGame();
-    void run();
+    int run();
 
 private:
     void initialize_game();
     void draw_board();
     void draw_walls_and_everything();
-    void draw_snake();
+    void draw_snake_body();
     void draw_food();
-    void update_snake();
+    void update_snake_head_direction();
     void update_food(GameOver &game_status);
     bool is_collision();
     bool is_food_eaten();
