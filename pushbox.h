@@ -7,10 +7,17 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include "snake.h"
 
-int pushbox(); // Function name changed to match implementation
+enum class WinningCondition
+{
+    WIN,
+    LOSS,
+    NOT_YET
+};
 
-class Game {
+class Game
+{
 public:
     Game();
     void play();
@@ -24,9 +31,11 @@ private:
     void printMap();
     bool movePlayer(int dx, int dy);
     bool moveBox(int dx, int dy);
-    bool checkWin();
-    bool checkLose();
+    void update_direction(Direction &direction);
+    bool movePlayerBox(int dx, int dy);
+    WinningCondition checkWin();
 };
 
-#endif
+int pushbox(); // Function name changed to match implementation
 
+#endif

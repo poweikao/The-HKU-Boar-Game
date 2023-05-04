@@ -18,12 +18,13 @@ struct Position
     int y;
 };
 
-enum class Direction
+enum class Direction // Important: this direction class is used in pushbox.cpp as well
 {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    NONE
 };
 
 enum class GameOver

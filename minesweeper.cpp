@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <limits>
 #include <cstring>
 #include "minesweeper.h"
 
@@ -110,19 +111,22 @@ void make_move(int *r, int *c)
     while (true)
     {
         cout << endl
-             << "Please enter two integers (Row, Column): ";
+             << "Please enter two integers (Row Column): ";
         cin >> *r >> *c;
         if (*r == 999)
         { // 999 is the secret win game code
             break;
         }
-        else if (*r >= 1 && *r <= 5 && *c >= 1 && *c <= 5)
+        else if (*r >= 1 && *r <= 5 && *c >= 1 && *c <= 5 && cin.good())
         {
             break;
         }
-        cout << "Invalid input: Row and Column must be between 1 and 5." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input: Row and Column must be integers between 1 and 5." << endl;
     }
 }
+
 void implement_mines(char answer_board[][5])
 {
     srand((unsigned)time(NULL));

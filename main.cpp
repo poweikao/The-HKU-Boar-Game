@@ -4,6 +4,9 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <limits>
+#include <chrono>
+#include <thread>
 
 // our own header files
 #include "printer.h"
@@ -26,7 +29,6 @@ void add_to_leaderboard(int game_score, string time);
 int main()
 {
     char user_choice;
-        int game_score;
     do
     {        
         print_menu();
@@ -42,7 +44,7 @@ int main()
         {
         case 'N':
             printf("Starting new game...\n");
-            game_score = new_game();
+            new_game();
             break;
         case 'Q':
             // this one works pretty well already ~Paul 4/12/2023
@@ -56,8 +58,9 @@ int main()
         }
 
         // Pause for user to read the screen
+        printf("\n_____________________________________________\n");
         printf("\nPress enter to continue...");
-        std::cin.ignore();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
         std::cin.get();
 
     } while (user_choice != 'Q');

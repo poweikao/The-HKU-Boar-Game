@@ -22,7 +22,7 @@ using namespace std;
 #include <chrono>
 #include <thread>
 
-void update_direction(Direction& direction);
+void update_direction(Direction &direction);
 
 // Main function
 int snake()
@@ -49,7 +49,8 @@ int SnakeGame::run()
 
     GameOver game_status = GameOver::NOT_YET;
 
-    while (game_status == GameOver::NOT_YET) {
+    while (game_status == GameOver::NOT_YET)
+    {
         update_direction(snake.direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         update_direction(snake.direction);
@@ -59,13 +60,16 @@ int SnakeGame::run()
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         update_direction(snake.direction);
 
-        if (is_collision()) {
+        if (is_collision())
+        {
             game_status = GameOver::COLLISSION;
         }
-        if (is_food_eaten()) {
+        if (is_food_eaten())
+        {
             food.eaten = true;
             score += 1000;
-            for (int i = snake.length; i > 0; i--) {
+            for (int i = snake.length; i > 0; i--)
+            {
                 snake.body[i] = snake.body[i - 1];
             }
             snake.body[0] = food.position;
@@ -79,9 +83,12 @@ int SnakeGame::run()
     print_game_over(game_status);
     print_score();
 
-    if(game_status == GameOver::WIN){
+    if (game_status == GameOver::WIN)
+    {
         return 1;
-    }else{
+    }
+    else
+    {
         return -1;
     }
 }
@@ -89,8 +96,10 @@ int SnakeGame::run()
 void SnakeGame::initialize_game()
 {
     // Initialize the board with empty spaces
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
-        for (int j = 0; j < BOARD_WIDTH; j++) {
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
             board[i][j] = ' ';
         }
     }
@@ -100,7 +109,8 @@ void SnakeGame::initialize_game()
     snake.length = INITIAL_SNAKE_LENGTH;
     int x = BOARD_WIDTH / 2;
     int y = BOARD_HEIGHT / 2;
-    for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++) {
+    for (int i = 0; i < INITIAL_SNAKE_LENGTH; i++)
+    {
         snake.body[i].x = x - i;
         snake.body[i].y = y;
     }
@@ -127,34 +137,42 @@ void SnakeGame::draw_board()
 
 void SnakeGame::draw_walls_and_everything()
 {
-    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    {
         cout << "#";
     }
     cout << endl;
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
         cout << "#";
-        for (int j = 0; j < BOARD_WIDTH; j++) {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
             cout << board[i][j];
         }
         cout << "#" << endl;
     }
-    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    {
         cout << "#";
     }
-    cout << endl;
+    cout << endl
+         << "Apple eaten: " << food.how_many_already_eaten - 1 << endl
+         << "Use arrow keys to navigate your snake." << endl;
 }
 
 void SnakeGame::draw_snake_body()
 {
 
-    for (int i = 0; i < snake.length; i++) {
+    for (int i = 0; i < snake.length; i++)
+    {
         board[snake.body[i].y][snake.body[i].x] = 'O';
     }
 }
 
 void SnakeGame::draw_food()
 {
-    if (food.eaten) {
+    if (food.eaten)
+    {
         return;
     }
     board[food.position.y][food.position.x] = 'X';
@@ -166,10 +184,12 @@ void SnakeGame::update_snake_head_direction()
     // ^^ added this line to make the snake's tail auto disappearing ~Paul 27 Apr
 
     // Move the snake
-    for (int i = snake.length - 1; i > 0; i--) {
+    for (int i = snake.length - 1; i > 0; i--)
+    {
         snake.body[i] = snake.body[i - 1];
     }
-    switch (snake.direction) {
+    switch (snake.direction)
+    {
     case Direction::UP:
         snake.body[0].y--;
         break;
@@ -182,27 +202,32 @@ void SnakeGame::update_snake_head_direction()
     case Direction::RIGHT:
         snake.body[0].x++;
         break;
+    default:
+        break;
     }
 }
 
-void SnakeGame::update_food(GameOver& game_status)
+void SnakeGame::update_food(GameOver &game_status)
 {
-    if (food.eaten) {
+    if (food.eaten)
+    {
         food.how_many_already_eaten++;
 
-        if (food.how_many_already_eaten > 5) {
+        if (food.how_many_already_eaten > 5)
+        {
             game_status = GameOver::WIN;
             return;
         }
 
         int x, y;
-        do {
+        do
+        {
             srand((unsigned)time(NULL));
             x = rand() % BOARD_WIDTH;
             y = rand() % BOARD_HEIGHT;
         } while (board[y][x] != ' ');
 
-        food.position = { x, y };
+        food.position = {x, y};
         food.eaten = false;
     }
 }
@@ -210,13 +235,16 @@ void SnakeGame::update_food(GameOver& game_status)
 bool SnakeGame::is_collision()
 {
     // Check if the snake collides with walls
-    if (snake.body[0].x < 0 || snake.body[0].x >= BOARD_WIDTH || snake.body[0].y < 0 || snake.body[0].y >= BOARD_HEIGHT) {
+    if (snake.body[0].x < 0 || snake.body[0].x >= BOARD_WIDTH || snake.body[0].y < 0 || snake.body[0].y >= BOARD_HEIGHT)
+    {
         return true;
     }
 
     // Check if the snake collides with its own body
-    for (int i = 1; i < snake.length; i++) {
-        if (snake.body[0].x == snake.body[i].x && snake.body[0].y == snake.body[i].y) {
+    for (int i = 1; i < snake.length; i++)
+    {
+        if (snake.body[0].x == snake.body[i].x && snake.body[0].y == snake.body[i].y)
+        {
             return true;
         }
     }
@@ -234,12 +262,14 @@ bool SnakeGame::is_game_over()
     return game_over;
 }
 
-void SnakeGame::print_game_over(const GameOver& game_status)
+void SnakeGame::print_game_over(const GameOver &game_status)
 {
-    if (game_status == GameOver::WIN) {
+    if (game_status == GameOver::WIN)
+    {
         std::cout << "GAME OVER! You win!" << std::endl;
     }
-    else if (game_status == GameOver::COLLISSION) {
+    else if (game_status == GameOver::COLLISSION)
+    {
         std::cout << "GAME OVER! You lost!" << std::endl;
     }
 }
@@ -251,13 +281,15 @@ void SnakeGame::print_score()
 }
 
 // Direction-getting related utilities
-void update_direction(Direction& direction)
+void update_direction(Direction &direction)
 { // this piece of code is delicate. Don't change it.
 // Detect operating system
 #ifdef _WIN32
-    // Windows
-    if (_kbhit()) {
-        switch (_getch()) {
+  // Windows
+    if (_kbhit())
+    {
+        switch (_getch())
+        {
         case 72: // Arrow up
             direction = Direction::UP;
             break;
@@ -276,8 +308,10 @@ void update_direction(Direction& direction)
 // Linux
 #include <ncurses.h>
     int ch = getch();
-    if (ch != ERR) {
-        switch (ch) {
+    if (ch != ERR)
+    {
+        switch (ch)
+        {
         case KEY_UP: // Arrow up
             direction = Direction::UP;
             break;
