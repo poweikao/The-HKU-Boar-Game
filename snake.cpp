@@ -164,27 +164,34 @@ void SnakeGame::draw_board()
 
 void SnakeGame::draw_walls_and_everything()
 {
+    std::string line;
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
-        cout << "#";
+        line += "#";
     }
-    cout << endl;
+    line += "\n";
+
     for (int i = 0; i < BOARD_HEIGHT; i++)
     {
-        cout << "#";                          // The left wall
-        for (int j = 0; j < BOARD_WIDTH -2 ; j++) // In the middle, the movable squares.
+        line += "#"; // The left wall
+        for (int j = 0; j < BOARD_WIDTH - 2; j++) // In the middle, the movable squares.
         {
-            cout << board[i][j];
+            line += board[i][j];
         }
-        cout << "#" << endl; // The right wall
+        line += "#\n"; // The right wall
     }
+
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
-        cout << "#";
+        line += "#";
     }
-    cout << endl
-         << "Apple eaten: " << food.how_many_already_eaten - 1 << endl
-         << "Use arrow keys to navigate your snake." << endl;
+    line += "\n\nApple eaten: " + std::to_string(food.how_many_already_eaten - 1) + "\nUse arrow keys to navigate your snake.\n";
+
+    std::istringstream iss(line);
+    for (std::string line; std::getline(iss, line);)
+    {
+        std::cout << line << std::endl;
+    }
 }
 
 void SnakeGame::draw_snake_body()
@@ -365,9 +372,8 @@ void update_direction(Direction &direction)
 #endif
 }
 
-/* int main()
+/*int main()
 {
     snake();
     return 0;
-}
- */
+}*/
