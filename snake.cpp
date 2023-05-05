@@ -164,34 +164,38 @@ void SnakeGame::draw_board()
 
 void SnakeGame::draw_walls_and_everything()
 {
-    std::string line;
+    // Clear the screen
+    clear();
+
+    // Draw the top wall
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
-        line += "#";
+        mvprintw(0, i, "#");
     }
-    line += "\n";
 
-    for (int i = 0; i < BOARD_HEIGHT; i++)
+    // Draw the side walls and the board content
+    for (int i = 0; i < BOARD_HEIGHT - 2; i++)
     {
-        line += "#"; // The left wall
+        mvprintw(i + 1, 0, "#");                  // The left wall
         for (int j = 0; j < BOARD_WIDTH - 2; j++) // In the middle, the movable squares.
         {
-            line += board[i][j];
+            mvprintw(i + 1, j + 1, "%c", board[i][j]);
         }
-        line += "#\n"; // The right wall
+        mvprintw(i + 1, BOARD_WIDTH, "#"); // The right wall
     }
 
+    // Draw the bottom wall
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
-        line += "#";
+        mvprintw(BOARD_HEIGHT, i, "#");
     }
-    line += "\n\nApple eaten: " + std::to_string(food.how_many_already_eaten - 1) + "\nUse arrow keys to navigate your snake.\n";
 
-    std::istringstream iss(line);
-    for (std::string line; std::getline(iss, line);)
-    {
-        std::cout << line << std::endl;
-    }
+    // Print additional information
+    mvprintw(BOARD_HEIGHT + 2, 0, "Apple eaten: %d", food.how_many_already_eaten - 1);
+    mvprintw(BOARD_HEIGHT + 3, 0, "Use arrow keys to navigate your snake.");
+
+    // Refresh the screen
+    refresh();
 }
 
 void SnakeGame::draw_snake_body()
@@ -268,7 +272,7 @@ void SnakeGame::update_food(GameOver &game_status)
             {
                 x = rand() % BOARD_WIDTH;
                 y = rand() % BOARD_HEIGHT;
-            } while (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT);
+            } while (x <= 0 || x >= BOARD_WIDTH || y <= 0 || y >= BOARD_HEIGHT);
         } while (board[y][x] != ' ');
 
         food.position = {x, y};
