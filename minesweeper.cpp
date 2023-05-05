@@ -38,7 +38,6 @@ int minesweeper()
 
     implement_mines(answer_board);
     implement_numbers(answer_board);
-    print_board(game_board);
 
     int r, c;
 
@@ -51,7 +50,8 @@ int minesweeper()
                  << "You won the minesweeper game!" << endl;
             return 1;
         }
-
+        
+        print_board(game_board);
         make_move(&r, &c);
 
         // Secret debugging auto win game code

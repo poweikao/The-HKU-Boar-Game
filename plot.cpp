@@ -164,6 +164,7 @@ void plot(int stage)
         printf("(1/2)\n");
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear cin stream
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
         std::cin.get();
@@ -267,6 +268,7 @@ void plot(int stage)
         printf("(1/2)\n");
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear cin stream
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
         std::cin.get();

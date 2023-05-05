@@ -56,7 +56,8 @@ int main()
             break;
 
         case 'V':
-            cout << "Displaying game log and exiting the game...\n"
+            cout << "\n_____________________________________________\n"
+                 << "Displaying game log...\n"
                  << endl;
             system("cat game_log.txt");
             break;
@@ -96,6 +97,7 @@ int new_game(const string &player_name)
     if (minesweeper_score < 0)
     {
         plot(-1);
+        save_log(player_name, false);
         return -1;
     }
 
@@ -104,6 +106,7 @@ int new_game(const string &player_name)
     if (snake_score < 0)
     {
         plot(-1);
+        save_log(player_name, false);
         return -1;
     }
 
@@ -112,14 +115,8 @@ int new_game(const string &player_name)
     if (pushbox_score < 0)
     {
         plot(-1);
-        return -1;
-    }
-
-    if (minesweeper_score < 0 || snake_score < 0 || pushbox_score < 0)
-    {
-        plot(-1);
         save_log(player_name, false);
-        return false;
+        return -1;
     }
 
     // This is the winning plot
@@ -137,7 +134,7 @@ int new_game(const string &player_name)
 
 void save_log(const std::string &player_name, const bool &game_won)
 {
-    std::ofstream log_file("game_log.txt", std::ios::app | std::ios::out); 
+    std::ofstream log_file("./game_log.txt", std::ios::app | std::ios::out);
 
     if (log_file.is_open())
     {
