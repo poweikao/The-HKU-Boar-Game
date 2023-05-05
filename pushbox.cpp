@@ -20,6 +20,9 @@
 #include <ncurses.h>
 #endif
 
+// Function Prototypes
+void update_direction(Direction &direction);
+
 // Define board size.
 #define BOARD_WIDTH 10
 #define BOARD_HEIGHT 8
@@ -308,7 +311,7 @@ bool Game::movePlayerBox(int dx, int dy)
     return true;
 }
 
-// update_direction: Updates the snake's direction based on the user's key input.
+// Updates the snake's direction based on the user's key input.
 void update_direction(Direction &direction)
 {
     // Detect operating system

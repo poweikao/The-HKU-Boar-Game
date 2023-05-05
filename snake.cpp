@@ -19,6 +19,9 @@
 #include <ncurses.h>
 #endif
 
+//Function Prototypes
+void update_direction(Direction &direction);
+
 using namespace std;
 
 // Main function

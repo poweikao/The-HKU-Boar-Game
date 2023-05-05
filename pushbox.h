@@ -46,6 +46,5 @@ private:
 
 // Main function for the Pushbox game
 int pushbox();
-void update_direction(Direction &direction);
 
 #endif
