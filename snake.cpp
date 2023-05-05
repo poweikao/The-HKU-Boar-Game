@@ -20,7 +20,7 @@
 #endif
 
 //Function Prototypes
-void update_direction(Direction &direction);
+void update_direction_snake(Direction &direction);
 
 using namespace std;
 
@@ -74,14 +74,14 @@ int SnakeGame::run()
     // Game loop
     while (game_status == GameOver::NOT_YET)
     {
-        update_direction(snake.direction); // Update the direction based on user input
+        update_direction_snake(snake.direction); // Update the direction based on user input
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        update_direction(snake.direction);
+        update_direction_snake(snake.direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        update_direction(snake.direction);
+        update_direction_snake(snake.direction);
         score -= 20; // Decrease the score by 20 every game loop iteration
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        update_direction(snake.direction);
+        update_direction_snake(snake.direction);
 
         if (is_collision())
         {
@@ -389,7 +389,7 @@ void SnakeGame::print_score()
 }
 
 // Updates the snake's direction based on the user's key input.
-void update_direction(Direction &direction)
+void update_direction_snake(Direction &direction)
 {
     // Detect operating system
 #ifdef _WIN32

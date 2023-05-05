@@ -37,7 +37,6 @@ private:
 
     // Private helper methods for managing the Pushbox game
     void printMap();
-    void update_direction(Direction &direction);
     bool movePlayer(int dx, int dy);
     bool moveBox(int dx, int dy);
     bool movePlayerBox(int dx, int dy);

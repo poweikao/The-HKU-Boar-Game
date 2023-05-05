@@ -21,7 +21,7 @@
 #endif
 
 // Function Prototypes
-void update_direction(Direction &direction);
+void update_direction_pushbox(Direction &direction);
 
 // Define board size.
 #define BOARD_WIDTH 10
@@ -104,13 +104,13 @@ void Game::play()
         Direction direction = Direction::NONE;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        update_direction(direction);
+        update_direction_pushbox(direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        update_direction(direction);
+        update_direction_pushbox(direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        update_direction(direction);
+        update_direction_pushbox(direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        update_direction(direction);
+        update_direction_pushbox(direction);
 
         int dx = 0;
         int dy = 0;
@@ -312,7 +312,7 @@ bool Game::movePlayerBox(int dx, int dy)
 }
 
 // Updates the snake's direction based on the user's key input.
-void update_direction(Direction &direction)
+void update_direction_pushbox(Direction &direction)
 {
     // Detect operating system
 #ifdef _WIN32
