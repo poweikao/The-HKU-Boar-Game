@@ -1,11 +1,17 @@
+// Include system libraries
 #include <iostream>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
 #include <cstdlib>
+#include <chrono>
+#include <thread>
 
-#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
+// Include custom header files
+#include "snake.h"
+
+// Define clear screen command based on the operating system
+#ifdef _WIN32
 #define CLEAR_COMMAND "cls"
 #include <conio.h>
 #else
@@ -15,27 +21,16 @@
 
 using namespace std;
 
-// Define constants
-
-// Define enum and struct
-
-// Function prototypes
-#include "snake.h"
-#include <chrono>
-#include <thread>
-
-void update_direction(Direction &direction);
-
 // Main function
+// Entry point for the snake game
 int snake()
 {
     // Do not change name. This function is used in main.cpp
-    SnakeGame new_game;
-    return new_game.run();
+    SnakeGame new_game;    // Create a new SnakeGame object
+    return new_game.run(); // Start the game and return the final result
 }
 
-///////
-
+// SnakeGame constructor
 SnakeGame::SnakeGame()
 {
     // Allocate memory for the board
@@ -45,9 +40,10 @@ SnakeGame::SnakeGame()
         board[i] = new char[BOARD_WIDTH];
     }
 
-    initialize_game();
+    initialize_game(); // Initialize the game state
 }
 
+// SnakeGame destructor
 SnakeGame::~SnakeGame()
 {
     // Deallocate memory for the board
@@ -56,13 +52,13 @@ SnakeGame::~SnakeGame()
         delete[] board[i];
     }
     delete[] board;
-
-    // Other destructor code...
 }
 
+// Main game loop
+// Returns 1 if the player wins, -1 if the player loses
 int SnakeGame::run()
 {
-    GameOver game_status = GameOver::NOT_YET;
+    GameOver game_status = GameOver::NOT_YET; // Initialize the game status
 
 #ifdef __linux__
     initscr();  // Initialize ncurses
@@ -72,25 +68,28 @@ int SnakeGame::run()
     keypad(stdscr, TRUE);
 #endif
 
+    // Game loop
     while (game_status == GameOver::NOT_YET)
     {
-        update_direction(snake.direction);
+        update_direction(snake.direction); // Update the direction based on user input
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         update_direction(snake.direction);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         update_direction(snake.direction);
-        score -= 20;
+        score -= 20; // Decrease the score by 20 every game loop iteration
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         update_direction(snake.direction);
 
         if (is_collision())
         {
-            game_status = GameOver::COLLISSION;
+            game_status = GameOver::COLLISION;
         }
-        if (is_food_eaten())
+        if (is_food_eaten()) // Check if the snake ate the food
         {
             food.eaten = true;
-            score += 1000;
+            score += 1000; // Increase the score by 1000 when the snake eats the food
+
+            // Extend the snake's body
             for (int i = snake.length; i > 0; i--)
             {
                 snake.body[i] = snake.body[i - 1];
@@ -99,12 +98,12 @@ int SnakeGame::run()
             snake.length++;
         }
 
-        update_snake_head_direction();
-        update_food(game_status);
-        draw_board();
+        update_snake_head_direction(); // Update the snake's head direction
+        update_food(game_status);      // Update the food on the board
+        draw_board();                  // Draw the board
     }
-    print_game_over(game_status);
-    print_score();
+    print_game_over(game_status); // Print the game over message
+    print_score();                // Print the final score
 
 #ifdef __linux__
     endwin(); // Clean up the terminal
@@ -120,6 +119,8 @@ int SnakeGame::run()
     }
 }
 
+// Initialize the game state
+// Sets up the initial board, snake, and food
 void SnakeGame::initialize_game()
 {
     // Initialize the board with empty spaces
@@ -145,47 +146,52 @@ void SnakeGame::initialize_game()
     // Set up the food
     food.eaten = true;
     GameOver game_status = GameOver::NOT_YET;
-    update_food(game_status);
+    update_food(game_status); // Place the first food on the board
 
     game_over = false;
-    score = 0;
+    score = 0; // Initialize the score to 0
 }
 
+// Clears the console and redraws the game board, food, and snake.
 void SnakeGame::draw_board()
 {
-    // Clear the console
     system(CLEAR_COMMAND);
 
-    // Draw the board with walls and food
+    // Draw the board with walls, food, and snake
     draw_food();
     draw_snake_body();
     print_walls_and_everything();
 }
 
+// Draws the food on the board if it has not been eaten.
 void SnakeGame::draw_food()
 {
+    // If the food is eaten, return without drawing anything
     if (food.eaten)
     {
         return;
     }
+    // Draw the food on the board at its position
     board[food.position.y][food.position.x] = 'X';
 }
 
+// Draws the snake's body on the board.
 void SnakeGame::draw_snake_body()
 {
-
+    // Iterate through each segment of the snake's body and draw it on the board
     for (int i = 0; i < snake.length; i++)
     {
         board[snake.body[i].y][snake.body[i].x] = 'O';
     }
 }
 
+// Linux version: Clears the screen and prints the game board, walls,
+// and additional information such as the number of apples eaten and instructions for the player.
 #ifdef __linux__
 void SnakeGame::print_walls_and_everything()
 {
     // Clear the screen
     clear();
-
     // Draw the top wall
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
@@ -216,37 +222,45 @@ void SnakeGame::print_walls_and_everything()
     refresh();
 }
 #else
+// This is the non-Linux version of the same function
 void SnakeGame::print_walls_and_everything()
 {
-    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    {
         cout << "#";
     }
     cout << endl;
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
         cout << "#";
-        for (int j = 0; j < BOARD_WIDTH; j++) {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
             cout << board[i][j];
         }
         cout << "#" << endl;
     }
-    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    {
         cout << "#";
     }
     cout << endl;
 }
 #endif
 
+// Updates the position of the snake's head based on its current direction,
+// and moves the rest of the body accordingly.
 void SnakeGame::update_snake_head_direction()
 {
+    // Clear the last snake tail position
     board[snake.body[snake.length - 1].y][snake.body[snake.length - 1].x] = ' ';
-    // ^^ added this line to make the snake's tail auto disappearing ~Paul 27 Apr
 
-    // Move the snake
-    // Move the snake
+    // Move the snake body
     for (int i = snake.length - 1; i > 0; i--)
     {
         snake.body[i] = snake.body[i - 1];
     }
+
+    // Calculate the new head position based on the current direction
     Position new_head = snake.body[0];
     switch (snake.direction)
     {
@@ -266,24 +280,33 @@ void SnakeGame::update_snake_head_direction()
         break;
     }
 
+    // Update the snake's head position if it's within the board boundaries
     if (new_head.x >= 0 && new_head.x < BOARD_WIDTH && new_head.y >= 0 && new_head.y < BOARD_HEIGHT)
     {
         snake.body[0] = new_head;
     }
 }
 
+// Generates a new food position if it is eaten, updates the
+// food counter, and sets the game status to 'win' if enough food has been eaten.
+// Input by reference: the game status. We arbitrary set the winning condition
+// to 5 apples. 
 void SnakeGame::update_food(GameOver &game_status)
 {
+    // If the food is eaten
     if (food.eaten)
     {
+        // Increment the food counter
         food.how_many_already_eaten++;
 
+        // If the food counter exceeds the winning threshold, set the game status to 'win'
         if (food.how_many_already_eaten > 5)
         {
             game_status = GameOver::WIN;
             return;
         }
 
+        // Generate a new food position on the board
         int x, y;
         do
         {
@@ -293,13 +316,14 @@ void SnakeGame::update_food(GameOver &game_status)
                 x = rand() % (BOARD_WIDTH - 2) + 1;
                 y = rand() % (BOARD_HEIGHT - 2) + 1;
             } while (x <= 0 || x >= BOARD_WIDTH || y <= 0 || y >= BOARD_HEIGHT);
-        } while (board[y][x] != ' ');
+        } while (board[y][x] != ' ' && board[y][x] != '#');
 
         food.position = {x, y};
         food.eaten = false;
     }
 }
 
+// Checks if the snake collides with the walls or its own body.
 bool SnakeGame::is_collision()
 {
     // Check if the snake collides with walls
@@ -320,38 +344,42 @@ bool SnakeGame::is_collision()
     return false;
 }
 
+// eturns true if the snake's head is at the same position as the food.
 bool SnakeGame::is_food_eaten()
 {
     return snake.body[0].x == food.position.x && snake.body[0].y == food.position.y;
 }
 
+// Returns true if the game is over.
 bool SnakeGame::is_game_over()
 {
     return game_over;
 }
 
+// Prints the game over message based on the game status (win or collision).
 void SnakeGame::print_game_over(const GameOver &game_status)
 {
     if (game_status == GameOver::WIN)
     {
         std::cout << "GAME OVER! You win!" << std::endl;
     }
-    else if (game_status == GameOver::COLLISSION)
+    else if (game_status == GameOver::COLLISION)
     {
         std::cout << "GAME OVER! You lost!" << std::endl;
     }
 }
 
+// Prints the current score and waits for a second.
 void SnakeGame::print_score()
 {
     std::cout << "Score: " << score << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
-// Direction-getting related utilities
+// update_direction: Updates the snake's direction based on the user's key input.
 void update_direction(Direction &direction)
-{ // this piece of code is delicate. Don't change it.
-// Detect operating system
+{ 
+    // Detect operating system
 #ifdef _WIN32
   // Windows
     if (_kbhit())
@@ -395,9 +423,3 @@ void update_direction(Direction &direction)
     }
 #endif
 }
-
-/*int main()
-{
-    snake();
-    return 0;
-}*/

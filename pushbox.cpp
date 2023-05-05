@@ -1,12 +1,18 @@
+// Include system libraries
 #include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
+#include <chrono>
+#include <thread>
+
+// Include custom header files
 #include "pushbox.h"
 #include "snake.h"
 
-#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
+// Define clear screen command based on the operating system
+#ifdef _WIN32
 #define CLEAR_COMMAND "cls"
 #include <conio.h>
 #else
@@ -14,16 +20,13 @@
 #include <ncurses.h>
 #endif
 
+// Define board size.
 #define BOARD_WIDTH 10
 #define BOARD_HEIGHT 8
 
 using namespace std;
 
-#include <chrono>
-#include <thread>
-
 // Main function
-
 int pushbox()
 {
 #ifdef __linux__
@@ -41,8 +44,8 @@ int pushbox()
     return 0;
 }
 
-//////////////
-
+// Game constructor
+// Initializes the game by setting up the map, player, box, and goal positions
 Game::Game()
 {
     // Define the map
@@ -87,6 +90,8 @@ Game::Game()
     } while ((playerX == boxX && playerY == boxY) || (playerX == goalX && playerY == goalY) || (boxX == goalX && boxY == goalY));
 }
 
+// Main game loop
+// Plays the game until a win or loss condition is reached
 void Game::play()
 {
     printMap();
@@ -125,6 +130,8 @@ void Game::play()
             break;
         }
 
+        // Attempt to move the player and update the player and box positions accordingly
+        // Check if the player can move and update the winCondition accordingly
         if (movePlayer(dx, dy))
         {
             if (playerX + dx == boxX && playerY + dy == boxY)
@@ -152,8 +159,8 @@ void Game::play()
         winCondition = checkWin();
     }
 
-#ifdef _WIN32
     // Print the appropriate message based on the WinningCondition
+#ifdef _WIN32
     if (winCondition == WinningCondition::WIN)
     {
         std::cout << "\nCongratulation HKUer, you win!\n"
@@ -177,6 +184,9 @@ void Game::play()
 }
 
 #ifdef _WIN32
+// Function: printMap
+// Inputs: None
+// Outputs: None (prints the current state of the game map to the console)
 void Game::printMap()
 {
     std::system(CLEAR_COMMAND);
@@ -190,7 +200,7 @@ void Game::printMap()
          << "Please use arrow keys to push the box (B) to the treasure chamber (X)." << endl
          << endl;
 
-    for (const auto &row : map)
+    for (const auto &row : map) // <-- Dynamic memory management is used here
     {
         std::cout << ' ' << row << std::endl;
     }
@@ -203,6 +213,9 @@ void Game::printMap()
     map[goalY][goalX] = '.';
 }
 #else
+// Function: printMap
+// Inputs: None
+// Outputs: None (prints the current state of the game map to the console)
 void Game::printMap()
 {
     std::system(CLEAR_COMMAND);
@@ -216,7 +229,7 @@ void Game::printMap()
     printw("\nPush The Box Challenge\n");
     printw("Please use arrow keys to push the box (B) to the treasure chamber (X).\n\n");
 
-    for (const auto &row : map)
+    for (const auto &row : map) // <-- Dynamic memory management is used here
     {
         printw(" %s\n", row.c_str());
     }
@@ -231,6 +244,9 @@ void Game::printMap()
 }
 #endif
 
+// This function kind of move players
+// Inputs: dx (int) - change in x position, dy (int) - change in y position
+// Outputs: bool - true if the player can move to the new position, false otherwise
 bool Game::movePlayer(int dx, int dy)
 {
     int newX = playerX + dx;
@@ -255,6 +271,9 @@ bool Game::movePlayer(int dx, int dy)
     return true;
 }
 
+// The function checks if you have won
+// Inputs: None
+// Outputs: WinningCondition - the current status of the game (WIN, LOSS, or NOT_YET)
 WinningCondition Game::checkWin()
 {
     WinningCondition winCondition = WinningCondition::NOT_YET;
@@ -273,6 +292,9 @@ WinningCondition Game::checkWin()
     return winCondition;
 }
 
+// This function move boxes
+// Inputs: dx (int) - change in x position, dy (int) - change in y position
+// Outputs: bool - true if the player can move the box to the new position, false otherwise
 bool Game::movePlayerBox(int dx, int dy)
 {
     if (map[boxY + dy][boxX + dx] == '#')
@@ -286,12 +308,12 @@ bool Game::movePlayerBox(int dx, int dy)
     return true;
 }
 
-// Direction-getting related utilities
-void Game::update_direction(Direction &direction)
-{ // this piece of code is delicate. Don't change it.
-// Detect operating system
+// update_direction: Updates the snake's direction based on the user's key input.
+void update_direction(Direction &direction)
+{
+    // Detect operating system
 #ifdef _WIN32
-  // Windows
+    // Windows
     if (_kbhit())
     {
         switch (_getch())
@@ -311,8 +333,7 @@ void Game::update_direction(Direction &direction)
         }
     }
 #else
-// Linux
-#include <ncurses.h>
+    // Linux
     int ch = getch();
     if (ch != ERR)
     {

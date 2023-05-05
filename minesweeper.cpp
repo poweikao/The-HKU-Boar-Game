@@ -1,12 +1,16 @@
+// Include system libraries
 #include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <limits>
 #include <cstring>
+
+// Include custom header files
 #include "minesweeper.h"
 
-#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
+// Define clear screen command based on the operating system
+#ifdef _WIN32
 #define CLEAR_COMMAND "cls"
 #else
 #define CLEAR_COMMAND "clear"
@@ -14,23 +18,10 @@
 
 using namespace std;
 
-// Define constants
-
-// Define enum and struct
-
-// Function prototypes
-int minesweeper();
-bool is_mine(int row, int col, const char board[][5]);
-void make_move(int *x, int *y);
-void implement_mines(char answer_board[][5]);
-void implement_numbers(char answer_board[][5]);
-bool reveal_board(const int &r, const int &c, const char answer_board[][5], char game_board[][5]);
-bool double_check_gameend(const char answer_board[][5], const char game_board[][5]);
-void print_board(char game_board[][5]);
-int main();
-
 // Main function
 
+// Main function for Minesweeper game
+// Returns 1 if the player wins and -1 if the player loses
 int minesweeper()
 {
     bool winning_condition = false;
@@ -38,6 +29,7 @@ int minesweeper()
 
     char game_board[5][5], answer_board[5][5];
 
+    // Initialize game_board and answer_board
     for (int i = 0; i < 25; i++)
     {
         game_board[i / 5][i % 5] = '#';
@@ -67,7 +59,6 @@ int minesweeper()
         {
             return 1;
         }
-        // Paul ~ 5/1/2023
 
         if (is_mine(r, c, answer_board))
         {
@@ -96,8 +87,9 @@ int minesweeper()
     }
 }
 
-//////////////
-
+// Function to check if there is a mine at the specified row and column in the answer_board
+// Input: row, col (integer coordinates), answer_board (2D character array)
+// Output: true if there is a mine at the specified coordinates, false otherwise
 bool is_mine(int row, int col, const char answer_board[][5])
 {
     if (answer_board[row][col] == '*')
@@ -106,6 +98,9 @@ bool is_mine(int row, int col, const char answer_board[][5])
         return (false);
 }
 
+// Function to get user input for the next move
+// Input: pointers to row and column integers
+// Output: modifies the row and column integers with the user's input
 void make_move(int *r, int *c)
 {
     while (true)
@@ -127,11 +122,14 @@ void make_move(int *r, int *c)
     }
 }
 
+// Function to randomly place mines on the answer_board
+// Input: answer_board (2D character array)
+// Output: modifies answer_board by placing mines ('*') randomly
 void implement_mines(char answer_board[][5])
 {
     srand((unsigned)time(NULL));
-    for (int i = 0; i < 4;) // 4 is the number of mines
-    {
+    for (int i = 0; i < 4;)
+    { // 4 is the number of mines
         int x = (rand() % 25) / 5;
         int y = (rand() % 25) % 5;
 
@@ -148,6 +146,10 @@ void implement_mines(char answer_board[][5])
     return;
 }
 
+// Function to calculate and place the numbers on the answer_board
+// based on the number of adjacent mines
+// Input: answer_board (2D character array)
+// Output: modifies answer_board by placing the number of adjacent mines for each cell
 void implement_numbers(char answer_board[][5])
 {
     char extended_answer_board[7][7];
@@ -191,11 +193,15 @@ void implement_numbers(char answer_board[][5])
     }
 }
 
-bool reveal_board(const int &r, const int &c, const char answer_board[][5], char game_board[][5]) // return true means winning
+// Reveal a position on the game board and check if the game is won
+// Input: r and c (the position to reveal), the answer board (for multiple reveals), the game board
+// Returns true if the game is won, false otherwise
+bool reveal_board(const int &r, const int &c, const char answer_board[][5], char game_board[][5])
 {
+    // If the clicked position contains a mine or a number
     if (answer_board[r][c] != ' ')
     {
-        // check winning condition
+        // Check if all non-mine positions have been revealed
         for (int i = 0; i < 25; i++)
         {
             if (!is_mine(i / 5, i % 5, answer_board) && game_board[i / 5][i % 5] == '#')
@@ -208,17 +214,23 @@ bool reveal_board(const int &r, const int &c, const char answer_board[][5], char
         return true;
     }
 
-    // white blocks are revealed together
+    // If the clicked position is an empty space, reveal all connected empty spaces
     game_board[r][c] = ' ';
     char extended_answer_board[7][7];
+
+    // Initialize the extended answer board with '#' characters
     for (int i = 0; i < 49; i++)
     {
         extended_answer_board[i / 7][i % 7] = '#';
     }
+
+    // Copy the answer board into the extended answer board
     for (int i = 0; i < 25; i++)
     {
         extended_answer_board[i / 5 + 1][i % 5 + 1] = answer_board[i / 5][i % 5];
     }
+
+    // Reveal all connected empty spaces on the game board
     bool not_fully_revealed = true;
     while (not_fully_revealed)
     {
@@ -238,6 +250,8 @@ bool reveal_board(const int &r, const int &c, const char answer_board[][5], char
             }
         }
     }
+
+    // Check if all non-mine positions have been revealed
     for (int i = 0; i < 25; i++)
     {
         if (!is_mine(i / 5, i % 5, answer_board) && game_board[i / 5][i % 5] == '#')
@@ -248,6 +262,9 @@ bool reveal_board(const int &r, const int &c, const char answer_board[][5], char
     return true;
 }
 
+// Double check if the game has ended by comparing answer_board and game_board
+// Input: the answer board and the current game board
+// Returns true if the game has ended, false otherwise
 bool double_check_gameend(const char answer_board[][5], const char game_board[][5])
 {
     for (int i = 0; i < 25; i++)
@@ -260,35 +277,35 @@ bool double_check_gameend(const char answer_board[][5], const char game_board[][
     return true;
 }
 
+// Print the current state of the game board
+// Input: the game board
 void print_board(char game_board[][5])
 {
     system(CLEAR_COMMAND);
 
+    // Print the column numbers
     cout << endl
-         << ' ' << ' ';
+         << ' ' << ' ' << ' ' << ' ';
     for (int i = 0; i < 5; i++)
         cout << i;
     cout << endl
          << endl;
+
+    // Print the row numbers and the game board
     for (int i = 0; i < 5; i++)
     {
-        cout << i << ' ';
+        cout << ' ' << ' ' << i << ' ';
         for (int j = 0; j < 5; j++)
         {
             cout << game_board[i][j];
         }
         cout << endl;
     }
-    cout << "There are 4 mines and 21 no mine squares." << endl
-         << "There're no flags! Remember where the mines are by your head!" << endl
-         << "Can you do this??" << endl;
+
+    // Print additional information about the game
+    cout << endl
+         << "There are 4 mines and 21 no mine squares." << endl
+         << "There're no flags. Remember where the mines are by your head!" << endl
+         << "Let's chanllenge ourselves!" << endl;
     return;
 }
-
-/*int main()
-{
-    if (minesweeper() == 0)
-    {
-        cout << "DEBUG: GAME OVER";
-    }
-}*/
