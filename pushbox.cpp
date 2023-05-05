@@ -152,6 +152,7 @@ void Game::play()
         winCondition = checkWin();
     }
 
+#ifdef _WIN32
     // Print the appropriate message based on the WinningCondition
     if (winCondition == WinningCondition::WIN)
     {
@@ -163,6 +164,16 @@ void Game::play()
         std::cout << "\nSorry, you lost. Try again!\n"
                   << std::endl;
     }
+#else
+    if (winCondition == WinningCondition::WIN)
+    {
+        printw("\nCongratulation HKUer, you win!\n\n");
+    }
+    else if (winCondition == WinningCondition::LOSS)
+    {
+        printw("\nSorry, you lost. Try again!\n\n");
+    }
+#endif
 }
 
 #ifdef _WIN32

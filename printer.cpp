@@ -52,11 +52,11 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("%-*s\n\n", WRAP_LENGTH, "It's late afternoon, and you want to get out of the school and get home. What can you do?");
         printf("%-*s\n\n", WRAP_LENGTH, "Complete the wild boars' challenges to uncover clues about the boars' plans and the secret to defeating them!");
         printf("%-*s\n\n", WRAP_LENGTH, "Fear not - you have what it takes to save the day!");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        // std::this_thread::sleep_for(std::chrono::seconds(1));
 
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
         std::cin.get();
 
         system(CLEAR_COMMAND);
@@ -70,11 +70,11 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("%-*s\n\n", WRAP_LENGTH, "To uncover a square, simply type in its coordinates. If it's safe, you'll see a number pop up indicating how many mines are nearby. If it's a mine, the game will be over.");
         printf("%-*s\n\n", WRAP_LENGTH, "There are 4 mines - you have to clear all other 21 squares, and leave the 4 mines untouched. Only after you have identified the 21 safe squares can you proceed.");
         printf("%-*s\n\n", WRAP_LENGTH, "Use your logical thinking and deduction skills to navigate the minefield and emerge victorious. Good luck, and watch your step!");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        // std::this_thread::sleep_for(std::chrono::seconds(1));
 
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
         std::cin.get();
         break;
     case 2:
@@ -90,11 +90,11 @@ void plot(int stage) // use this function to print out all the dialog / plots
         printf("%-*s\n\n", WRAP_LENGTH, "But this isn't just any game of Snake - because you cleared the minefield, now the Wild Boar King has heard of you. He's impressed.");
         printf("%-*s\n\n", WRAP_LENGTH, "The Wild Boar King has promised to reveal information about a boars' secret plan if you can successfully catch 5 mischievously and randomly spanwned apples in Snake.");
         printf("%-*s\n\n", WRAP_LENGTH, "It's a risky game, but you know you can do it. Good luck, my fellow HKU chanllenger!");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        // std::this_thread::sleep_for(std::chrono::seconds(1));
 
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
         std::cin.get();
         break;
     case 3:
@@ -115,7 +115,7 @@ void plot(int stage) // use this function to print out all the dialog / plots
 
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
+        // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // clear cin stream
         std::cin.get();
         break;
     case 4:

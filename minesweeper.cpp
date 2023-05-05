@@ -46,6 +46,7 @@ int minesweeper()
 
     implement_mines(answer_board);
     implement_numbers(answer_board);
+    print_board(game_board);
 
     int r, c;
 
@@ -86,13 +87,12 @@ int minesweeper()
             winning_condition = reveal_board(r, c, answer_board, game_board);
         }
 
-        if (winning_condition | (how_many_moves == 0))
+        if (winning_condition || (how_many_moves == 0))
         {
             cout << endl
                  << "You won the minesweeper game!" << endl;
             return 1;
         }
-        print_board(game_board);
     }
 }
 
