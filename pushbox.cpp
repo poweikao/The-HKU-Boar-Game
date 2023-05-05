@@ -11,6 +11,7 @@
 #include <conio.h>
 #else
 #define CLEAR_COMMAND "clear"
+#include <ncursestw/ncurses.h>
 #endif
 
 #define BOARD_WIDTH 10
@@ -25,8 +26,11 @@ using namespace std;
 
 int pushbox()
 {
+    initscr();  // Initialize ncurses
+    timeout(0); // Set input to non-blocking mode
     Game game;
     game.play();
+    endwin(); // Clean up the terminal
     return 0;
 }
 

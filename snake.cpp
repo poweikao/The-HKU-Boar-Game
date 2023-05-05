@@ -4,11 +4,12 @@
 #include <ctime>
 #include <cstring>
 
-#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023 No problem! ~Lucy
+#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
 #include <conio.h>
 #else
 #define CLEAR_COMMAND "clear"
+#include <ncursestw/ncurses.h>
 #endif
 
 using namespace std;
@@ -46,8 +47,9 @@ SnakeGame::~SnakeGame()
 
 int SnakeGame::run()
 {
-
     GameOver game_status = GameOver::NOT_YET;
+    initscr();  // Initialize ncurses
+    timeout(0); // Set input to non-blocking mode
 
     while (game_status == GameOver::NOT_YET)
     {
@@ -82,6 +84,8 @@ int SnakeGame::run()
     }
     print_game_over(game_status);
     print_score();
+
+    endwin(); // Clean up the terminal
 
     if (game_status == GameOver::WIN)
     {
@@ -305,8 +309,7 @@ void update_direction(Direction &direction)
         }
     }
 #else
-// Linux
-#include <ncurses.h>
+    // Linux
     int ch = getch();
     if (ch != ERR)
     {
