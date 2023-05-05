@@ -87,7 +87,7 @@ int SnakeGame::run()
         if (is_food_eaten()) // Check if the snake ate the food
         {
             food.eaten = true;
-            score += 1000; // Increase the score by 1000 when the snake eats the food
+            score += 1200; // Increase the score by 1000 when the snake eats the food
 
             // Extend the snake's body
             for (int i = snake.length; i > 0; i--)
@@ -290,7 +290,7 @@ void SnakeGame::update_snake_head_direction()
 // Generates a new food position if it is eaten, updates the
 // food counter, and sets the game status to 'win' if enough food has been eaten.
 // Input by reference: the game status. We arbitrary set the winning condition
-// to 5 apples. 
+// to 5 apples.
 void SnakeGame::update_food(GameOver &game_status)
 {
     // If the food is eaten
@@ -311,11 +311,20 @@ void SnakeGame::update_food(GameOver &game_status)
         do
         {
             srand((unsigned)time(NULL));
+            bool no_collision_with_snake = true;
             do
             {
                 x = rand() % (BOARD_WIDTH - 2) + 1;
                 y = rand() % (BOARD_HEIGHT - 2) + 1;
-            } while (x <= 0 || x >= BOARD_WIDTH || y <= 0 || y >= BOARD_HEIGHT);
+
+                for (int i = 1; i < snake.length; i++)
+                {
+                    if (x == snake.body[i].x && y == snake.body[i].y)
+                    {
+                        no_collision_with_snake = false;
+                    }
+                }
+            } while (!no_collision_with_snake);
         } while (board[y][x] != ' ' && board[y][x] != '#');
 
         food.position = {x, y};
@@ -378,10 +387,10 @@ void SnakeGame::print_score()
 
 // update_direction: Updates the snake's direction based on the user's key input.
 void update_direction(Direction &direction)
-{ 
+{
     // Detect operating system
 #ifdef _WIN32
-  // Windows
+    // Windows
     if (_kbhit())
     {
         switch (_getch())
@@ -401,7 +410,7 @@ void update_direction(Direction &direction)
         }
     }
 #else
-  // Linux
+    // Linux
     int ch = getch();
     if (ch != ERR)
     {

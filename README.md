@@ -36,17 +36,17 @@ The HKU Boar Game leverages a lot of dynamic memory management to save memories 
 
 (Requirement 3: Dynamic memory management)
 
-# Random Mines, Snake Fruits, and Boxes
+### Random Mines, Snake Fruits, and Boxes
 
 As essential features in any arcade game, all of our 3 mini arcade games (minesweeper, snake, push box) contains randomly generated datasets. In the minesweeper game, it is the locations of the mines that are randomly generated. In the snake game, it is the locations of the apples that are randomly gnerated. And for the push the box game, the initial location of the player and the initial location of the box are all randomly generated. 
 
 (Requirement 1: Generation of random game sets or events)
 
-# Three Mini Games - All In One
+### Three Mini Games - All In One
 
 Each mini arcade games are its own .cpp and .h files. In addition, the plot of the game has its own .cpp and .h files as well. They are all linked by the Makefile. 
 
-(5: Program codes in multiple files)
+(Requirement 5: Program codes in multiple files)
 
 
 ## Non-standard Libraries

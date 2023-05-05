@@ -6,7 +6,7 @@ LDFLAGS=-I local/include/ncursestw -L local/lib -std=c++11 -pedantic-errors -lnc
 EXEC= THE_HKU_BOAR_GAME
 
 # Source files
-SRC= main.cpp printer.cpp minesweeper.cpp snake.cpp pushbox.cpp
+SRC= main.cpp plot.cpp minesweeper.cpp snake.cpp pushbox.cpp
 # Object files generated from source files
 OBJ= $(SRC:.cpp=.o)
 
@@ -33,6 +33,7 @@ ncurses:
 clean:
 	rm -f *.o
 	rm $(EXEC)
+	rm game_log.txt
 
 # Remove object files, the executable, ncurses, and local directories
 deep_clean:
@@ -40,6 +41,7 @@ deep_clean:
 	rm -rfv ncurses
 	rm -rfv local
 	rm $(EXEC)
+	rm game_log.txt
 
 # Phony targets (not associated with files)
 .PHONY: ncurses clean deep_clean

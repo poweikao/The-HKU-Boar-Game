@@ -7,6 +7,8 @@
 #include <limits>
 #include <chrono>
 #include <thread>
+#include <fstream>
+#include <iomanip>
 
 // Include custom header files
 #include "plot.h"
@@ -41,16 +43,28 @@ int main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear cin stream
 
         // Handle user input
+        string player_name;
         switch (toupper(user_choice))
         {
         case 'N':
-            cout << "Starting new game..." << endl;
-            new_game();
+            cout << "Enter your name: ";
+            getline(cin, player_name);
+
+            cout << "Starting new game for " << player_name << "..." << endl;
+            new_game(player_name);
             break;
+
+        case 'V':
+            cout << "Displaying game log and exiting the game...\n"
+                 << endl;
+            system("cat game_log.txt");
+            break;
+
         case 'Q':
             cout << "\nExiting game...\n\n";
             exit(0);
             break;
+
         default:
             cout << "Invalid choice. Please try again." << endl;
             break;
@@ -66,13 +80,15 @@ int main()
 }
 
 /**
- * Starts a new game by sequentially playing Minesweeper, Snake, and Pushbox.
+ * This function starts a new game by sequentially playing Minesweeper, Snake, and Pushbox
  *
- * Return: int  - The total score across all games (for debug purposes, not displayed the to players).
- * Returns -1 if any game results in game over.
+ * Return: int  - The total score across all games (for debug purposes, not displayed the to players)
+ * Returns -1 if any game results in game over
+ *
+ * It takes the player's name as an input. This function passes the player name over to the file-writing function
  */
 
-int new_game()
+int new_game(const string &player_name)
 {
     plot(1);
     int minesweeper_score = minesweeper();
@@ -98,6 +114,45 @@ int new_game()
         return -1;
     }
 
+    if (minesweeper_score < 0 || snake_score < 0 || pushbox_score < 0)
+    {
+        plot(-1);
+        save_log(player_name, false);
+        return false;
+    }
+
+    // This is the winning plot
     plot(4);
+    save_log(player_name, true);
     return (minesweeper_score + snake_score + pushbox_score);
+}
+
+/**
+ * This function records the game attempts into a .txt file
+ *
+ * Return: void. But it will write something onto the file
+ * It takes the player's name and that whther he/she has won or not as the input
+ */
+
+void save_log(const std::string &player_name, const bool &game_won)
+{
+    std::ofstream log_file("game_log.txt", std::ios::app); // Open the file in append mode
+
+    if (log_file.is_open())
+    {
+        // Get the current time
+        auto now = time(nullptr);
+        auto tm_now = *localtime(&now);
+
+        // Write the log entry
+        log_file << std::put_time(&tm_now, "%Y-%m-%d %H:%M") << " ";
+        log_file << (game_won ? "GAME_WIN" : "GAME_LOSS") << " ";
+        log_file << player_name << endl;
+
+        log_file.close();
+    }
+    else
+    {
+        cerr << "Unable to open the log file." << endl;
+    }
 }
