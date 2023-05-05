@@ -9,10 +9,6 @@
 #include <chrono>
 #include <thread>
 
-// Main function for the Snake game
-int snake();
-void update_direction(Direction &direction);
-
 // Constants for the Snake game
 const int BOARD_WIDTH = 25;
 const int BOARD_HEIGHT = 15;
@@ -95,5 +91,9 @@ private:
     void print_game_over(const GameOver &game_status);
     void print_score();
 };
+
+// Main function for the Snake game
+int snake();
+void update_direction(Direction &direction);
 
 #endif

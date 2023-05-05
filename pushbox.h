@@ -9,10 +9,6 @@
 #include <string>
 #include "snake.h" // For the Direction enum class
 
-// Main function for the Pushbox game
-int pushbox();
-void update_direction(Direction &direction);
-
 // Enum class representing the possible winning conditions
 enum class WinningCondition
 {
@@ -47,5 +43,9 @@ private:
     bool movePlayerBox(int dx, int dy);
     WinningCondition checkWin();
 };
+
+// Main function for the Pushbox game
+int pushbox();
+void update_direction(Direction &direction);
 
 #endif
