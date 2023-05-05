@@ -52,7 +52,6 @@ int minesweeper()
     int how_many_moves = 20;
     while (true)
     {
-        print_board(game_board);
         if (double_check_gameend(answer_board, game_board))
         {
             cout << endl
@@ -93,6 +92,7 @@ int minesweeper()
                  << "You won the minesweeper game!" << endl;
             return 1;
         }
+        print_board(game_board);
     }
 }
 

@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cstring>
+#include <cstdlib>
 
 #ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
 #define CLEAR_COMMAND "cls"
@@ -170,8 +171,8 @@ void SnakeGame::draw_walls_and_everything()
     cout << endl;
     for (int i = 0; i < BOARD_HEIGHT; i++)
     {
-        cout << "#";                              // The left wall
-        for (int j = 0; j < BOARD_WIDTH - 2; j++) // In the middle, the movable squares.
+        cout << "#";                          // The left wall
+        for (int j = 0; j < BOARD_WIDTH -2 ; j++) // In the middle, the movable squares.
         {
             cout << board[i][j];
         }
@@ -210,26 +211,33 @@ void SnakeGame::update_snake_head_direction()
     // ^^ added this line to make the snake's tail auto disappearing ~Paul 27 Apr
 
     // Move the snake
+    // Move the snake
     for (int i = snake.length - 1; i > 0; i--)
     {
         snake.body[i] = snake.body[i - 1];
     }
+    Position new_head = snake.body[0];
     switch (snake.direction)
     {
     case Direction::UP:
-        snake.body[0].y--;
+        new_head.y--;
         break;
     case Direction::DOWN:
-        snake.body[0].y++;
+        new_head.y++;
         break;
     case Direction::LEFT:
-        snake.body[0].x--;
+        new_head.x--;
         break;
     case Direction::RIGHT:
-        snake.body[0].x++;
+        new_head.x++;
         break;
     default:
         break;
+    }
+
+    if (new_head.x >= 0 && new_head.x < BOARD_WIDTH && new_head.y >= 0 && new_head.y < BOARD_HEIGHT)
+    {
+        snake.body[0] = new_head;
     }
 }
 
@@ -361,4 +369,5 @@ void update_direction(Direction &direction)
 {
     snake();
     return 0;
-} */
+}
+ */
