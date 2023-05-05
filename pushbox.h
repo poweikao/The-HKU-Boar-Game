@@ -11,6 +11,7 @@
 
 // Main function for the Pushbox game
 int pushbox();
+void update_direction(Direction &direction);
 
 // Enum class representing the possible winning conditions
 enum class WinningCondition

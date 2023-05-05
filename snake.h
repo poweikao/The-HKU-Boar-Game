@@ -11,6 +11,7 @@
 
 // Main function for the Snake game
 int snake();
+void update_direction(Direction &direction);
 
 // Constants for the Snake game
 const int BOARD_WIDTH = 25;

@@ -27,6 +27,7 @@ using namespace std;
 
 // Function prototypes
 int new_game(const string &player_name);
+void save_log(const std::string &player_name, const bool &game_won);
 
 // Main function
 int main()

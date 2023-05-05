@@ -385,7 +385,7 @@ void SnakeGame::print_score()
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
-// update_direction: Updates the snake's direction based on the user's key input.
+// Updates the snake's direction based on the user's key input.
 void update_direction(Direction &direction)
 {
     // Detect operating system
