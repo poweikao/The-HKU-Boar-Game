@@ -135,8 +135,6 @@ void implement_mines(char answer_board[][5])
         int x = (rand() % 25) / 5;
         int y = (rand() % 25) % 5;
 
-        // cout << "mine " << i << ' ' << x << ' ' << y << endl;
-
         if (answer_board[x][y] != '*')
         {
             answer_board[x][y] = '*';
@@ -191,7 +189,6 @@ void implement_numbers(char answer_board[][5])
             continue;
         }
     }
-    // print_board(answer_board);
 }
 
 bool reveal_board(const int &r, const int &c, const char answer_board[][5], char game_board[][5]) // return true means winning
@@ -282,6 +279,9 @@ void print_board(char game_board[][5])
         }
         cout << endl;
     }
+    cout << "There are 4 mines and 21 no mine squares." << endl
+         << "There're no flags! Remember where the mines are by your head!" << endl
+         << "Can you do this??" << endl;
     return;
 }
 

@@ -200,9 +200,8 @@ void SnakeGame::print_walls_and_everything()
         {
             mvprintw(i + 1, j + 1, "%c", board[i][j]);
         }
-        mvprintw(i + 1, BOARD_WIDTH, "#"); // The right wall
+        mvprintw(i + 1, BOARD_WIDTH - 1, "#"); // The right wall
     }
-
     // Draw the bottom wall
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
