@@ -1,5 +1,5 @@
-#ifndef PRINTER_H
-#define PRINTER_H
+#ifndef PLOT_H
+#define PLOT_H
 
 #include <iostream>
 #include <iomanip>

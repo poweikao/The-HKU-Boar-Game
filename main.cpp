@@ -1,17 +1,23 @@
-// system libraries
+// Include system libraries
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <limits>
+#include <chrono>
+#include <thread>
+#include <fstream>
+#include <iomanip>
 
-// our own header files
-#include "printer.h"
+// Include custom header files
+#include "plot.h"
 #include "minesweeper.h"
 #include "snake.h"
 #include "pushbox.h"
 
-#ifdef _WIN32 // VERY IMPORTANT!! DO NOT DELETE. WITHOUT THIS LINE MY COMPUTER CANNOT RUN THE CODE. ~Paul 4/12/2023
+// Define clear screen command based on the operating system
+#ifdef _WIN32
 #define CLEAR_COMMAND "cls"
 #else
 #define CLEAR_COMMAND "clear"
@@ -20,73 +26,131 @@
 using namespace std;
 
 // Function prototypes
-int new_game();
-void add_to_leaderboard(int game_score, string time);
+int new_game(const string &player_name);
+void save_log(const std::string &player_name, const bool &game_won);
 
+// Main function
 int main()
 {
     char user_choice;
-        int game_score;
     do
-    {        
+    {
+        // Print the main menu
         print_menu();
 
         // Read user input
-        printf("Enter your choice: ");
-        std::cin >> user_choice;
-
-        
+        cout << "Enter your choice: ";
+        cin >> user_choice;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear cin stream
 
         // Handle user input
-        switch (user_choice)
+        string player_name;
+        switch (toupper(user_choice))
         {
         case 'N':
-            printf("Starting new game...\n");
-            game_score = new_game();
+            cout << "Enter your name: ";
+            getline(cin, player_name);
+
+            cout << "Starting new game for " << player_name << "..." << endl;
+            new_game(player_name);
             break;
+
+        case 'V':
+            cout << "\n_____________________________________________\n"
+                 << "Displaying game log...\n"
+                 << endl;
+            system("cat game_log.txt");
+            break;
+
         case 'Q':
-            // this one works pretty well already ~Paul 4/12/2023
-            printf("\nExiting game...\n\n");
+            cout << "\nExiting game...\n\n";
             exit(0);
             break;
+
         default:
-            // this one works pretty well already ~Paul 4/12/2023
-            printf("Invalid choice. Please try again.\n");
+            cout << "Invalid choice. Please try again." << endl;
             break;
         }
 
         // Pause for user to read the screen
-        printf("\nPress enter to continue...");
-        std::cin.ignore();
-        std::cin.get();
+        cout << "\n_____________________________________________\n";
+        cout << "\nPress enter to continue...";
+        cin.get();
 
-    } while (user_choice != 'Q');
+    } while (toupper(user_choice) != 'Q');
     return 0;
 }
 
-int new_game() // this function returns the total score. -1 signifies game over
+/**
+ * This function starts a new game by sequentially playing Minesweeper, Snake, and Pushbox
+ *
+ * Return: int  - The total score across all games (for debug purposes, not displayed the to players)
+ * Returns -1 if any game results in game over
+ *
+ * It takes the player's name as an input. This function passes the player name over to the file-writing function
+ */
+
+int new_game(const string &player_name)
 {
-    plot(1); // plots are defined in the printers. Plot 1 is the beginning
+    plot(1);
     int minesweeper_score = minesweeper();
     if (minesweeper_score < 0)
-    {              // a lesser than 0 score means you have failed the mission, and it's game over
-        plot(-1);  // plot(-1) is the failure plot
-        return -1; // return -1 means game over
+    {
+        plot(-1);
+        save_log(player_name, false);
+        return -1;
     }
-    plot(2); // Plot 2 is what happen after you passed the first chanllenge
+
+    plot(2);
     int snake_score = snake();
     if (snake_score < 0)
     {
         plot(-1);
+        save_log(player_name, false);
         return -1;
     }
-    plot(3); // Plot 3 is what happen after you passed the second chanllenge
+
+    plot(3);
     int pushbox_score = pushbox();
     if (pushbox_score < 0)
     {
         plot(-1);
+        save_log(player_name, false);
         return -1;
     }
-    plot(4); // Plot 4 is what happen after you passed the third chanllenge
+
+    // This is the winning plot
+    plot(4);
+    save_log(player_name, true);
     return (minesweeper_score + snake_score + pushbox_score);
+}
+
+/**
+ * This function records the game attempts into a .txt file
+ *
+ * Return: void. But it will write something onto the file
+ * It takes the player's name and that whther he/she has won or not as the input
+ */
+
+void save_log(const std::string &player_name, const bool &game_won)
+{
+    std::ofstream log_file("./game_log.txt", std::ios::app | std::ios::out);
+
+    if (log_file.is_open())
+    {
+        // Get the current time
+        auto now = time(nullptr);
+        auto tm_now = *localtime(&now);
+
+        // Write the log entry
+        log_file << std::put_time(&tm_now, "%Y-%m-%d %H:%M") << " ";
+        log_file << (game_won ? "GAME_WIN" : "GAME_LOSS") << " ";
+        log_file << player_name << endl;
+
+        log_file.close();
+    }
+    else
+    {
+        cerr << "Unable to open the log file." << endl;
+    }
 }

@@ -1,12 +1,18 @@
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
 
+// Include system libraries
 #include <iostream>
-#include <iomanip>
-#include <ctime>
+#include <vector>
 #include <cstdlib>
+#include <ctime>
+#include <limits>
+#include <cstring>
 
-int minesweeper(); // Do not change name. This function is used in main.cpp
+// Main function for the Minesweeper game
+int minesweeper();
+
+// See Minesweeper.cpp for documentations of the functions
 bool is_mine(int row, int col, const char board[][5]);
 void make_move(int *x, int *y);
 void implement_mines(char answer_board[][5]);
