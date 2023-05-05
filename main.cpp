@@ -26,7 +26,7 @@
 using namespace std;
 
 // Function prototypes
-int new_game();
+int new_game(const string &player_name);
 
 // Main function
 int main()
