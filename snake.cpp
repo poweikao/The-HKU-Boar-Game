@@ -9,7 +9,7 @@
 #include <conio.h>
 #else
 #define CLEAR_COMMAND "clear"
-#include <ncursestw/ncurses.h>
+#include <ncurses.h>
 #endif
 
 using namespace std;
@@ -50,6 +50,9 @@ int SnakeGame::run()
     GameOver game_status = GameOver::NOT_YET;
     initscr();  // Initialize ncurses
     timeout(0); // Set input to non-blocking mode
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
 
     while (game_status == GameOver::NOT_YET)
     {
@@ -305,7 +308,7 @@ void update_direction(Direction &direction)
             break;
         case 77: // Arrow right
             direction = Direction::RIGHT;
-            break;
+           break;
         }
     }
 #else

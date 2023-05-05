@@ -11,7 +11,7 @@
 #include <conio.h>
 #else
 #define CLEAR_COMMAND "clear"
-#include <ncursestw/ncurses.h>
+#include <ncurses.h>
 #endif
 
 #define BOARD_WIDTH 10

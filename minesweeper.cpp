@@ -117,13 +117,13 @@ void make_move(int *r, int *c)
         { // 999 is the secret win game code
             break;
         }
-        else if (*r >= 1 && *r <= 5 && *c >= 1 && *c <= 5 && cin.good())
+        else if (*r >= 0 && *r <= 4 && *c >= 0 && *c <= 4 && cin.good())
         {
             break;
         }
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input: Row and Column must be integers between 1 and 5." << endl;
+        cout << "Invalid input: Row and Column must be integers between 0 and 4." << endl;
     }
 }
 
