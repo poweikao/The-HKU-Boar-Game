@@ -78,3 +78,4 @@ This code has referred and/or directly quoted codes from the following sources. 
 - https://stackoverflow.com/questions/5437643/strange-behaviour-of-stdcout-in-linux
 - https://stackoverflow.com/questions/903221/press-enter-to-continue
 - https://www.devopsschool.com/blog/make-for-windows-nmake/
+- https://stackoverflow.com/questions/8612147/placement-of-l-option-in-gcc

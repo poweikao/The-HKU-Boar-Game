@@ -7,6 +7,9 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#ifdef __linux__
+#include <ncurses.h>
+#endif
 #include "snake.h" // For the Direction enum class
 
 // Enum class representing the possible winning conditions

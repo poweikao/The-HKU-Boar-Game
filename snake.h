@@ -9,6 +9,10 @@
 #include <chrono>
 #include <thread>
 
+#ifdef __linux__
+#include <ncurses.h>
+#endif
+
 // Constants for the Snake game
 const int BOARD_WIDTH = 25;
 const int BOARD_HEIGHT = 15;

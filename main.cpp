@@ -137,7 +137,7 @@ int new_game(const string &player_name)
 
 void save_log(const std::string &player_name, const bool &game_won)
 {
-    std::ofstream log_file("game_log.txt", std::ios::app); // Open the file in append mode
+    std::ofstream log_file("game_log.txt", std::ios::app | std::ios::out); 
 
     if (log_file.is_open())
     {

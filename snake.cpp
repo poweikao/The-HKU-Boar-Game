@@ -7,9 +7,6 @@
 #include <chrono>
 #include <thread>
 
-// Include custom header files
-#include "snake.h"
-
 // Define clear screen command based on the operating system
 #ifdef _WIN32
 #define CLEAR_COMMAND "cls"
@@ -18,6 +15,9 @@
 #define CLEAR_COMMAND "clear"
 #include <ncurses.h>
 #endif
+
+// Include custom header files
+#include "snake.h"
 
 //Function Prototypes
 void update_direction_snake(Direction &direction);
