@@ -37,22 +37,39 @@ int snake()
 
 SnakeGame::SnakeGame()
 {
+    // Allocate memory for the board
+    board = new char *[BOARD_HEIGHT];
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        board[i] = new char[BOARD_WIDTH];
+    }
+
     initialize_game();
 }
 
 SnakeGame::~SnakeGame()
 {
-    // Do nothing
+    // Deallocate memory for the board
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        delete[] board[i];
+    }
+    delete[] board;
+
+    // Other destructor code...
 }
 
 int SnakeGame::run()
 {
     GameOver game_status = GameOver::NOT_YET;
+
+#ifdef __linux__
     initscr();  // Initialize ncurses
     timeout(0); // Set input to non-blocking mode
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
+#endif
 
     while (game_status == GameOver::NOT_YET)
     {
@@ -88,7 +105,9 @@ int SnakeGame::run()
     print_game_over(game_status);
     print_score();
 
+#ifdef __linux__
     endwin(); // Clean up the terminal
+#endif
 
     if (game_status == GameOver::WIN)
     {
@@ -144,21 +163,21 @@ void SnakeGame::draw_board()
 
 void SnakeGame::draw_walls_and_everything()
 {
-    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    for (int i = 0; i < BOARD_WIDTH; i++)
     {
         cout << "#";
     }
     cout << endl;
     for (int i = 0; i < BOARD_HEIGHT; i++)
     {
-        cout << "#";
-        for (int j = 0; j < BOARD_WIDTH; j++)
+        cout << "#";                              // The left wall
+        for (int j = 0; j < BOARD_WIDTH - 2; j++) // In the middle, the movable squares.
         {
             cout << board[i][j];
         }
-        cout << "#" << endl;
+        cout << "#" << endl; // The right wall
     }
-    for (int i = 0; i < BOARD_WIDTH + 2; i++)
+    for (int i = 0; i < BOARD_WIDTH; i++)
     {
         cout << "#";
     }
@@ -230,8 +249,11 @@ void SnakeGame::update_food(GameOver &game_status)
         do
         {
             srand((unsigned)time(NULL));
-            x = rand() % BOARD_WIDTH;
-            y = rand() % BOARD_HEIGHT;
+            do
+            {
+                x = rand() % BOARD_WIDTH;
+                y = rand() % BOARD_HEIGHT;
+            } while (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT);
         } while (board[y][x] != ' ');
 
         food.position = {x, y};
@@ -308,11 +330,11 @@ void update_direction(Direction &direction)
             break;
         case 77: // Arrow right
             direction = Direction::RIGHT;
-           break;
+            break;
         }
     }
 #else
-    // Linux
+  // Linux
     int ch = getch();
     if (ch != ERR)
     {
@@ -334,3 +356,9 @@ void update_direction(Direction &direction)
     }
 #endif
 }
+
+/* int main()
+{
+    snake();
+    return 0;
+} */

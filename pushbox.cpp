@@ -26,11 +26,18 @@ using namespace std;
 
 int pushbox()
 {
+#ifdef __linux__
     initscr();  // Initialize ncurses
     timeout(0); // Set input to non-blocking mode
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+#endif
     Game game;
     game.play();
+#ifdef __linux__
     endwin(); // Clean up the terminal
+#endif
     return 0;
 }
 

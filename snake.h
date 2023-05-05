@@ -52,7 +52,7 @@ class SnakeGame
 {
 public:
     SnakeGame();
-    ~SnakeGame();
+    virtual ~SnakeGame();
     int run();
 
 private:
@@ -71,7 +71,7 @@ private:
 
     Snake snake;
     Food food;
-    char board[BOARD_HEIGHT][BOARD_WIDTH];
+    char** board;
     bool game_over;
     int score;
 };
