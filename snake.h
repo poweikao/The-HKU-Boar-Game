@@ -58,7 +58,7 @@ public:
 private:
     void initialize_game();
     void draw_board();
-    void draw_walls_and_everything();
+    void print_walls_and_everything();
     void draw_snake_body();
     void draw_food();
     void update_snake_head_direction();

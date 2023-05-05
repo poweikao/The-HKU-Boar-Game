@@ -165,6 +165,7 @@ void Game::play()
     }
 }
 
+#ifdef _WIN32
 void Game::printMap()
 {
     std::system(CLEAR_COMMAND);
@@ -190,6 +191,34 @@ void Game::printMap()
     map[boxY][boxX] = '.';
     map[goalY][goalX] = '.';
 }
+#else
+void Game::printMap()
+{
+    std::system(CLEAR_COMMAND);
+
+    map[playerY][playerX] = 'P';
+    map[boxY][boxX] = 'B';
+    map[goalY][goalX] = 'X';
+
+    clear(); // Clear the screen in ncurses
+
+    printw("\nPush The Box Challenge\n");
+    printw("Please use arrow keys to push the box (B) to the treasure chamber (X).\n\n");
+
+    for (const auto &row : map)
+    {
+        printw(" %s\n", row.c_str());
+    }
+
+    printw("\nYou automatically lose if the box is pushed to the corner.\n");
+
+    refresh(); // Refresh the screen in ncurses
+
+    map[playerY][playerX] = '.';
+    map[boxY][boxX] = '.';
+    map[goalY][goalX] = '.';
+}
+#endif
 
 bool Game::movePlayer(int dx, int dy)
 {

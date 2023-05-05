@@ -159,10 +159,29 @@ void SnakeGame::draw_board()
     // Draw the board with walls and food
     draw_food();
     draw_snake_body();
-    draw_walls_and_everything();
+    print_walls_and_everything();
 }
 
-void SnakeGame::draw_walls_and_everything()
+void SnakeGame::draw_food()
+{
+    if (food.eaten)
+    {
+        return;
+    }
+    board[food.position.y][food.position.x] = 'X';
+}
+
+void SnakeGame::draw_snake_body()
+{
+
+    for (int i = 0; i < snake.length; i++)
+    {
+        board[snake.body[i].y][snake.body[i].x] = 'O';
+    }
+}
+
+#ifdef __linux__
+void SnakeGame::print_walls_and_everything()
 {
     // Clear the screen
     clear();
@@ -187,7 +206,7 @@ void SnakeGame::draw_walls_and_everything()
     // Draw the bottom wall
     for (int i = 0; i < BOARD_WIDTH; i++)
     {
-        mvprintw(BOARD_HEIGHT, i, "#");
+        mvprintw(BOARD_HEIGHT - 1, i, "#");
     }
 
     // Print additional information
@@ -197,24 +216,26 @@ void SnakeGame::draw_walls_and_everything()
     // Refresh the screen
     refresh();
 }
-
-void SnakeGame::draw_snake_body()
+#else
+void SnakeGame::print_walls_and_everything()
 {
-
-    for (int i = 0; i < snake.length; i++)
-    {
-        board[snake.body[i].y][snake.body[i].x] = 'O';
+    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+        cout << "#";
     }
-}
-
-void SnakeGame::draw_food()
-{
-    if (food.eaten)
-    {
-        return;
+    cout << endl;
+    for (int i = 0; i < BOARD_HEIGHT; i++) {
+        cout << "#";
+        for (int j = 0; j < BOARD_WIDTH; j++) {
+            cout << board[i][j];
+        }
+        cout << "#" << endl;
     }
-    board[food.position.y][food.position.x] = 'X';
+    for (int i = 0; i < BOARD_WIDTH + 2; i++) {
+        cout << "#";
+    }
+    cout << endl;
 }
+#endif
 
 void SnakeGame::update_snake_head_direction()
 {
@@ -270,8 +291,8 @@ void SnakeGame::update_food(GameOver &game_status)
             srand((unsigned)time(NULL));
             do
             {
-                x = rand() % BOARD_WIDTH;
-                y = rand() % BOARD_HEIGHT;
+                x = rand() % (BOARD_WIDTH - 2) + 1;
+                y = rand() % (BOARD_HEIGHT - 2) + 1;
             } while (x <= 0 || x >= BOARD_WIDTH || y <= 0 || y >= BOARD_HEIGHT);
         } while (board[y][x] != ' ');
 
