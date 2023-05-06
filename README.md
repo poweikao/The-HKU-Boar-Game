@@ -26,7 +26,7 @@ Complete the challenges to uncover clues about the boars' plans and the secret t
 
 ### Interactive Interface
 
-The HKU Boar Game comprises of 4 major parts - the main interface, the minesweeper game, the snake game, and the push box game. In the minesweeper game, the program can detect and compare the input of users against the answer board and the current game status. In the snake and push box games, the player's movements are recorded into the `Position` struct, which will then be manipulated, recorded, and updated based on the user arrow key inputs. 
+The HKU Boar Game comprises of 4 major parts - the main interface, the minesweeper game, the snake game, and the push box game. The game includes randomly generated datasets for minesweeper, snake, and push box games. In the minesweeper game, the program can detect and compare the input of users against the answer board and the current game status. In the snake and push box games, the player's movements are recorded into the `Position` struct, which will then be manipulated, recorded, and updated based on the user arrow key inputs. 
 
 (Requirement 2: Data structures for storing game status)
 
@@ -50,8 +50,7 @@ Each mini arcade games are its own .cpp and .h files. In addition, the game's pl
 
 ### Text-based Game History Memory Function
 
-In the game menu, if you type "V," you can view your previous game histories. You can see the time of your previous attempts, the name of attempt, and whether the clear the 3 missions.  
-The history is stored in `./game_log.txt`, and its function requires file I/O to realize. 
+In the game menu, if you type "V," you can view your previous game histories. You can see the time of your previous attempts, the name of attempt, and whether the clear the 3 missions. This games will append new game record onto the .txt file everytime a game ends (either in a game over or a player victory). The history is stored in `./game_log.txt`, and its function requires file I/O to realize. 
 
 (Requirement 4: File input/output)
 
@@ -76,7 +75,7 @@ The history is stored in `./game_log.txt`, and its function requires file I/O to
 
 ## References
 
-This code has referred to and/or directly quoted codes from the following sources. We tried to modify the codes as much as we could but downloading and installing ncurses; it is way beyond our capacity.
+This code has referred to and/or directly quoted codes from the following sources. We tried to modify the codes as much as we could but downloading and installing ncurses; it is way beyond our capability.
 
 - Ncurses library
 - https://github.com/Colton-Ko/tetris-in-ncurses/ for how to install ncurses on Linux and buildncurses.sh
