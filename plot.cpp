@@ -14,7 +14,7 @@
 #ifdef _WIN32
 #define CLEAR_COMMAND "cls"
 #else
-#define CLEAR_COMMAND "clear"
+#define CLEAR_COMMAND "reset"
 #endif
 
 using namespace std;
@@ -26,7 +26,7 @@ using namespace std;
 void print_menu()
 {
     system(CLEAR_COMMAND); // clear the console screen
-    printf("=============================================\n");
+    printf("\n=============================================\n");
     printf("||      Welcome to the HKU Boar Game!      ||\n");
     printf("=============================================\n\n");
 
