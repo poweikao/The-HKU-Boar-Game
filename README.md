@@ -18,36 +18,41 @@ Complete the challenges to uncover clues about the boars' plans and the secret t
 ## Game Rules
 
 1. Have fun
-2. There are 3 games - minesweeper, snake and push box
-3. Pass through the 3 games and you will win
+2. There are 3 games - minesweeper, snake, and push box
+3. Pass through the 3 games, and you will win
 4. Fail either one of them, and you lose
 
 ## Coding Features and Requirements Matched
 
 ### Interactive Interface
 
-The HKU Boar Game comprises of 4 major parts - the main interface, the minesweeper game, the snake game, and the push box game. In the minesweeper game, the program is able to detect and compare the input of users against the answer board and the current game status. In the snake game and the push box game, player's movements are recorded into the `Position` struct, which will then be manipulated, recorded, and updated based on the user arrow key inputs. 
+The HKU Boar Game comprises of 4 major parts - the main interface, the minesweeper game, the snake game, and the push box game. The game includes randomly generated datasets for minesweeper, snake, and push box games. In the minesweeper game, the program can detect and compare the input of users against the answer board and the current game status. In the snake and push box games, the player's movements are recorded into the `Position` struct, which will then be manipulated, recorded, and updated based on the user arrow key inputs. 
 
 (Requirement 2: Data structures for storing game status)
 
 ### Dynamic Memory Management
 
-The HKU Boar Game leverages a lot of dynamic memory management to save memories and avoid `stack smashed` errors. For example, in the snake game, the game board that contains the snake and the walls are recorded in `char** board[][]`, which is an 2D array of pointers. The values that the pointers point to are later in the code assigned and manipulated. 
+The HKU Boar Game leverages a lot of dynamic memory management to save memories and avoid `stack smashed` errors. For example, in the snake game, the game board that contains the snake and the walls is recorded in `char** board[][]`, which is a 2D array of pointers. The values that the pointers point to are later in the code assigned and manipulated. 
 
 (Requirement 3: Dynamic memory management)
 
 ### Random Mines, Snake Fruits, and Boxes
 
-As essential features in any arcade game, all of our 3 mini arcade games (minesweeper, snake, push box) contains randomly generated datasets. In the minesweeper game, it is the locations of the mines that are randomly generated. In the snake game, it is the locations of the apples that are randomly gnerated. And for the push the box game, the initial location of the player and the initial location of the box are all randomly generated. 
+As essential features in any arcade game, all of our 3 mini arcade games (minesweeper, snake, push box) contains randomly generated datasets. In the minesweeper game, the locations of the mines are randomly generated. In the snake game, the locations of the apples are randomly generated. And for the push-the-box game, the initial location of the player and the initial location of the box are all randomly generated. 
 
 (Requirement 1: Generation of random game sets or events)
 
 ### Three Mini Games - All In One
 
-Each mini arcade games are its own .cpp and .h files. In addition, the plot of the game has its own .cpp and .h files as well. They are all linked by the Makefile. 
+Each mini arcade games are its own .cpp and .h files. In addition, the game's plot has its own .cpp and .h files as well. They are all linked by the Makefile. 
 
 (Requirement 5: Program codes in multiple files)
 
+### Text-based Game History Memory Function
+
+In the game menu, if you type "V," you can view your previous game histories. You can see the time of your previous attempts, the name of attempt, and whether the clear the 3 missions. This games will append new game record onto the .txt file everytime a game ends (either in a game over or a player victory). The history is stored in `./game_log.txt`, and its function requires file I/O to realize. 
+
+(Requirement 4: File input/output)
 
 ## Non-standard Libraries
 
@@ -65,12 +70,12 @@ Each mini arcade games are its own .cpp and .h files. In addition, the plot of t
 
 * `make all` will download ncurses and compile the entire game for you. 
 * `make clean` will delete all .o files and executables, but it doesn't uninstall ncurses. 
-* `make deep_clean` will delete all intemediary files and uninstall ncurses. 
+* `make deep_clean` will delete all intermediary files and uninstall ncurses. 
 * `make ncurses` downloads ncurses only.
 
 ## References
 
-This code has referred and/or directly quoted codes from the following sources. We tried to modify the codes as much as we can, but for downoading and installing ncurses, it is way beyond our capacity. You would find the file `buildncurses.sh` to be very similar to the many samples you would find online.  
+This code has referred to and/or directly quoted codes from the following sources. We tried to modify the codes as much as we could but downloading and installing ncurses; it is way beyond our capability.
 
 - Ncurses library
 - https://github.com/Colton-Ko/tetris-in-ncurses/ for how to install ncurses on Linux and buildncurses.sh
