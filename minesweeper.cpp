@@ -44,15 +44,15 @@ int minesweeper()
     int how_many_moves = 20;
     while (true)
     {
-        if (double_check_gameend(answer_board, game_board))
+        if (double_check_gameend(answer_board, game_board)) // to check the win condition one more time
         {
             cout << endl
                  << "You won the minesweeper game!" << endl;
             return 1;
         }
-        
+
         print_board(game_board);
-        make_move(&r, &c);
+        make_move(&r, &c); 
 
         // Secret debugging auto win game code
         if (r == 999)

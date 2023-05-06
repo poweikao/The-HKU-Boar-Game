@@ -44,7 +44,7 @@ enum class GameOver
     NOT_YET
 };
 
-// A struct representing the Snake, including its direction, length, and body positions
+// A struct representing the snake, including its direction, length, and body positions
 struct Snake
 {
     Direction direction;

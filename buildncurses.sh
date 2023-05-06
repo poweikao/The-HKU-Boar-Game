@@ -32,7 +32,7 @@ if test -f "ncurses/.ncurses_ready"; then
 fi
 
 cd ncurses
-# Referred from https://stackoverflow.com/questions/60325432/using-ncurses-without-installing-it
+# Referred from https://stackoverflow.com/questions/60325432/using-ncurses-without-installing-it and https://github.com/Colton-Ko/tetris-in-ncurses 
 
 if ! test -f .config; then
         ./configure --prefix $(pwd)/../local --enable-widec --with-pthread --cache-file=.config

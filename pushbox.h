@@ -28,7 +28,7 @@ public:
     // Constructor
     Game();
 
-    // Main method to play the Pushbox game
+    // For playing the Pushbox game
     void play();
 
 private:

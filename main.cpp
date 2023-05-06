@@ -129,7 +129,7 @@ int new_game(const string &player_name)
  * This function records the game attempts into a .txt file
  *
  * Return: void. But it will write something onto the file
- * It takes the player's name and that whther he/she has won or not as the input
+ * This function takes the player's name and that whther he/she has won or not as the input
  */
 
 void save_log(const std::string &player_name, const bool &game_won)

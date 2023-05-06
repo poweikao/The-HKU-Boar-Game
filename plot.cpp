@@ -113,7 +113,7 @@ void plot(int stage)
         printf("to smithereens!\n\n");
         printf("(1/2)\n");
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // to avoid the screen jumping too fast
         printf("\n_____________________________________________\n");
         std::puts("Press Enter to continue...");
         std::cin.get();

@@ -12,7 +12,7 @@
 // Main function for the Minesweeper game
 int minesweeper();
 
-// See Minesweeper.cpp for documentations of the functions
+// See Minesweeper.cpp for documentations of these functions
 bool is_mine(int row, int col, const char board[][5]);
 void make_move(int *x, int *y);
 void implement_mines(char answer_board[][5]);

@@ -94,7 +94,7 @@ Game::Game()
 }
 
 // Main game loop
-// Plays the game until a win or loss condition is reached
+// Plays the game until a win or loss condition is realized
 void Game::play()
 {
     printMap();

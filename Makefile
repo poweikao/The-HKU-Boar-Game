@@ -7,7 +7,7 @@ SRC= main.cpp plot.cpp minesweeper.cpp snake.cpp pushbox.cpp
 OBJ= $(SRC:.cpp=.o)
 
 all: $(EXEC)
-	echo "Compile Done."
+	echo "Compile Done!"
 
 $(EXEC): ncurses $(OBJ)
 	$(CC) $(OBJ) -o $@ $(LDFLAGS)

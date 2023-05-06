@@ -28,7 +28,6 @@ using namespace std;
 // Entry point for the snake game
 int snake()
 {
-    // Do not change name. This function is used in main.cpp
     SnakeGame new_game;    // Create a new SnakeGame object
     return new_game.run(); // Start the game and return the final result
 }
